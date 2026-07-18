@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: classifier-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: classifier-api }
+  template:
+    metadata:
+      labels: { app: classifier-api }
+    spec:
+      containers:
+        - name: classifier-api
+          image: hs-classifier:local
+          imagePullPolicy: IfNotPresent      # use the imported local image
+          ports:
+            - containerPort: 8080
+          startupProbe:                       # gates everything until the model has loaded
+            httpGet: { path: /healthz, port: 8080 }
+            periodSeconds: 5
+            failureThreshold: 30              # allow up to ~150s for the first model load
+          readinessProbe:                     # after startup, keeps a wedged pod out of the Service
+            httpGet: { path: /healthz, port: 8080 }
+            periodSeconds: 5
+          resources:
+            requests: { memory: "1Gi", cpu: "500m" }
+            limits:   { memory: "2Gi" }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: classifier-api
+spec:
+  selector: { app: classifier-api }
+  ports:
+    - port: 80
+      targetPort: 8080

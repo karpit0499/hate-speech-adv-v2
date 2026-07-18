@@ -1,0 +1,8 @@
+transformers==4.44.2
+fastapi==0.114.0
+uvicorn==0.30.6
+huggingface_hub==0.24.6
+# Uncomment when you add the Phase 8 rationale call:
+requests==2.32.3
+# Uncomment when you add the Phase 9 BigQuery writer:
+google-cloud-bigquery==3.25.0

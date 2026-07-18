@@ -1,0 +1,5 @@
+model_list:
+  - model_name: rationale-model            # the name YOUR app uses
+    litellm_params:
+      model: ollama/qwen2.5:3b             # swap to gemini/… by editing only this line
+      api_base: http://host.k3d.internal:11434
