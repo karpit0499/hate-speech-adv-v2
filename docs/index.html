@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>hate-speech-adv v2 — live classifier demo</title>
+<style>
+  :root {
+    --bg: #0f1216; --panel: #171b21; --line: #262c34; --ink: #e6e9ee;
+    --muted: #9aa4b2; --accent: #7aa2ff; --hate: #ff6b6b; --off: #ffb454; --neither: #4ade80;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 15px/1.55 -apple-system, Segoe UI, Roboto, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 20px 80px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  h2 { font-size: 16px; margin: 28px 0 10px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .panel { background: var(--panel); border: 1px solid var(--line);
+           border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+  textarea { width: 100%; min-height: 90px; resize: vertical; background: #0c0f13;
+             color: var(--ink); border: 1px solid var(--line); border-radius: 8px;
+             padding: 10px; font: inherit; }
+  button { background: var(--accent); color: #0b0e12; border: 0; border-radius: 8px;
+           padding: 9px 16px; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 10px; }
+  .status { color: var(--muted); font-size: 13px; }
+  .bars { margin-top: 14px; }
+  .bar { display: grid; grid-template-columns: 96px 1fr 56px; gap: 10px;
+         align-items: center; margin: 6px 0; }
+  .bar .name { font-size: 13px; color: var(--muted); }
+  .bar .track { height: 12px; background: #0c0f13; border-radius: 6px; overflow: hidden; }
+  .bar .fill { height: 100%; width: 0; transition: width .3s; }
+  .bar .pct { font-variant-numeric: tabular-nums; font-size: 13px; text-align: right; }
+  .fill.hate_speech { background: var(--hate); }
+  .fill.offensive { background: var(--off); }
+  .fill.neither { background: var(--neither); }
+  .verdict { margin-top: 12px; font-size: 15px; }
+  .chip { display: inline-block; padding: 2px 10px; border-radius: 999px;
+          font-weight: 700; font-size: 13px; }
+  .chip.hate_speech { background: rgba(255,107,107,.16); color: var(--hate); }
+  .chip.offensive { background: rgba(255,180,84,.16); color: var(--off); }
+  .chip.neither { background: rgba(74,222,128,.16); color: var(--neither); }
+  .rationale { color: var(--muted); font-size: 14px; margin-top: 6px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+  th, td { border: 1px solid var(--line); padding: 6px 9px; text-align: right; }
+  th:first-child, td:first-child { text-align: left; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .cm td.diag { background: rgba(122,162,255,.14); font-weight: 700; }
+  .headline { display: flex; gap: 22px; flex-wrap: wrap; margin: 6px 0 14px; }
+  .metric { font-variant-numeric: tabular-nums; }
+  .metric b { font-size: 22px; }
+  details { margin-top: 12px; } summary { cursor: pointer; color: var(--muted); }
+  input[type=password] { background: #0c0f13; color: var(--ink); border: 1px solid var(--line);
+                         border-radius: 8px; padding: 8px; width: 100%; margin-top: 8px; font: inherit; }
+  code { background: #0c0f13; padding: 1px 5px; border-radius: 5px; }
+  a { color: var(--accent); }
+  .note { font-size: 12.5px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>hate-speech-adv v2 — live classifier</h1>
+  <p class="sub">
+    A RoBERTa encoder, fine-tuned with LoRA and exported to ONNX, running
+    <b>entirely in your browser</b> — no server, no API key. First run downloads the
+    quantized model from the Hugging Face Hub (~125&nbsp;MB, then cached).
+  </p>
+
+  <!-- ============ CLASSIFY ============ -->
+  <div class="panel">
+    <h2 style="margin-top:0">Classify text</h2>
+    <textarea id="text" placeholder="Type or paste a message…">The service was slow but the staff were friendly and helpful.</textarea>
+    <div class="row">
+      <button id="run">Classify</button>
+      <span id="status" class="status">Model loads on first classify.</span>
+    </div>
+    <div id="result" class="bars" hidden>
+      <div class="verdict">Prediction: <span id="chip" class="chip"></span></div>
+      <div class="rationale" id="rationale"></div>
+      <div style="margin-top:12px">
+        <div class="bar"><span class="name">hate_speech</span><div class="track"><div id="fill-hate_speech" class="fill hate_speech"></div></div><span id="pct-hate_speech" class="pct"></span></div>
+        <div class="bar"><span class="name">offensive</span><div class="track"><div id="fill-offensive" class="fill offensive"></div></div><span id="pct-offensive" class="pct"></span></div>
+        <div class="bar"><span class="name">neither</span><div class="track"><div id="fill-neither" class="fill neither"></div></div><span id="pct-neither" class="pct"></span></div>
+      </div>
+    </div>
+
+    <details>
+      <summary>Optional: add a one-sentence LLM rationale (your own Groq key, stays in your browser)</summary>
+      <p class="note">
+        The rationale is cosmetic. The encoder above already fixed the label; the LLM only
+        writes prose about a decision it <b>cannot change</b>. Your key is used only for a
+        direct browser call to Groq and is never stored or sent anywhere else. Leave blank to
+        keep the plain template rationale.
+      </p>
+      <input id="groqkey" type="password" placeholder="gsk_… (optional)" autocomplete="off" />
+    </details>
+  </div>
+
+  <!-- ============ EVALUATE ============ -->
+  <div class="panel">
+    <h2 style="margin-top:0">Evaluation (baked in)</h2>
+    <p class="note">
+      Runs a small <b>curated, labelled sample</b> (<code>eval_set.json</code>) through the
+      in-browser model and scores it live. This is illustrative — the authoritative numbers
+      in the README come from the held-out split of the full dataset. The point here is that
+      you can <i>watch</i> the model be measured, per class, with no setup.
+    </p>
+    <div class="row">
+      <button id="runeval">Run evaluation</button>
+      <span id="evalstatus" class="status"></span>
+    </div>
+    <div id="evalout" hidden>
+      <div class="headline">
+        <span class="metric">accuracy <b id="m-acc">–</b></span>
+        <span class="metric">macro&#8209;F1 <b id="m-f1">–</b></span>
+        <span class="metric">n <b id="m-n">–</b></span>
+      </div>
+      <table>
+        <thead><tr><th>class</th><th>precision</th><th>recall</th><th>F1</th><th>support</th></tr></thead>
+        <tbody id="perclass"></tbody>
+      </table>
+      <h2>Confusion matrix <span class="note">(rows = true, cols = predicted)</span></h2>
+      <table class="cm">
+        <thead><tr><th></th><th>pred hate</th><th>pred off</th><th>pred neither</th></tr></thead>
+        <tbody id="cm"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <p class="note">
+    Built with <a href="https://github.com/huggingface/transformers.js" target="_blank" rel="noopener">transformers.js</a>.
+    Model &amp; source: see the project README.
+  </p>
+</div>
+
+<script type="module">
+import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0";
+
+// ---- CONFIG: replace with your ONNX repo from Phase 13 ----
+const MODEL_ID = "kmrarpit2704/hs-roberta-v2-onnx";
+const LABELS = ["hate_speech", "offensive", "neither"];
+
+env.allowLocalModels = false;   // always fetch from the Hub
+
+let classifier = null;
+const $ = (id) => document.getElementById(id);
+
+async function getClassifier() {
+  if (classifier) return classifier;
+  $("status").textContent = "Downloading model (first time only)…";
+  classifier = await pipeline("text-classification", MODEL_ID, {
+    dtype: "q8",   // the quantized model.onnx you pushed in Phase 13
+    progress_callback: (p) => {
+      if (p.status === "progress" && p.total) {
+        const pct = Math.round((p.loaded / p.total) * 100);
+        $("status").textContent = `Downloading ${p.file}: ${pct}%`;
+      }
+    },
+  });
+  $("status").textContent = "Model ready.";
+  return classifier;
+}
+
+// returns { hate_speech: 0.9, offensive: 0.05, neither: 0.05 }
+async function scores(text) {
+  const clf = await getClassifier();
+  const out = await clf(text, { top_k: null }); // all labels
+  const m = {};
+  for (const { label, score } of out) m[label] = score;
+  for (const l of LABELS) if (!(l in m)) m[l] = 0;
+  return m;
+}
+
+function argmax(m) {
+  return LABELS.reduce((a, b) => (m[b] > m[a] ? b : a), LABELS[0]);
+}
+
+async function llmRationale(text, label, key) {
+  // Optional, user-supplied key. The label is already fixed; the LLM cannot change it.
+  const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+    body: JSON.stringify({
+      model: "llama-3.1-8b-instant",
+      messages: [{
+        role: "user",
+        content: `A classifier already decided this text is '${label}'. In ONE sentence, ` +
+                 `explain why that label fits. Do not change or question the label.\n\nTEXT: ${text}`,
+      }],
+    }),
+  });
+  const data = await r.json();
+  return data.choices?.[0]?.message?.content?.trim() || "";
+}
+
+$("run").addEventListener("click", async () => {
+  const text = $("text").value.trim();
+  if (!text) return;
+  $("run").disabled = true;
+  try {
+    const m = await scores(text);
+    const label = argmax(m);
+    $("result").hidden = false;
+    const chip = $("chip");
+    chip.textContent = label;
+    chip.className = "chip " + label;
+    for (const l of LABELS) {
+      const pct = Math.round(m[l] * 100);
+      $("fill-" + l).style.width = pct + "%";
+      $("pct-" + l).textContent = pct + "%";
+    }
+    let rationale = `Model classified this text as '${label}' with confidence ${m[label].toFixed(2)}.`;
+    const key = $("groqkey").value.trim();
+    if (key) {
+      $("rationale").textContent = "Writing rationale…";
+      try { rationale = (await llmRationale(text, label, key)) || rationale; }
+      catch { rationale += " (LLM rationale unavailable.)"; }
+    }
+    $("rationale").textContent = rationale;
+  } catch (e) {
+    $("status").textContent = "Error: " + e.message;
+  } finally {
+    $("run").disabled = false;
+  }
+});
+
+// ---------- Evaluation (verified against sklearn) ----------
+function evaluate(trueLabels, predLabels) {
+  const idx = Object.fromEntries(LABELS.map((l, i) => [l, i]));
+  const K = LABELS.length;
+  const cm = Array.from({ length: K }, () => Array(K).fill(0));
+  for (let i = 0; i < trueLabels.length; i++) cm[idx[trueLabels[i]]][idx[predLabels[i]]]++;
+  const perClass = LABELS.map((l, c) => {
+    const tp = cm[c][c];
+    let fp = 0, fn = 0;
+    for (let r = 0; r < K; r++) if (r !== c) fp += cm[r][c];
+    for (let k = 0; k < K; k++) if (k !== c) fn += cm[c][k];
+    const precision = tp + fp ? tp / (tp + fp) : 0;
+    const recall = tp + fn ? tp / (tp + fn) : 0;
+    const f1 = precision + recall ? (2 * precision * recall) / (precision + recall) : 0;
+    return { label: l, precision, recall, f1, support: cm[c].reduce((a, b) => a + b, 0) };
+  });
+  const total = trueLabels.length;
+  const correct = LABELS.reduce((a, _, c) => a + cm[c][c], 0);
+  return { cm, perClass, accuracy: total ? correct / total : 0,
+           macroF1: perClass.reduce((a, x) => a + x.f1, 0) / K };
+}
+
+$("runeval").addEventListener("click", async () => {
+  $("runeval").disabled = true;
+  try {
+    $("evalstatus").textContent = "Loading eval set…";
+    const data = await (await fetch("eval_set.json")).json();
+    const ex = data.examples;
+    const trueLabels = ex.map((e) => e.label);
+    const preds = [];
+    for (let i = 0; i < ex.length; i++) {
+      $("evalstatus").textContent = `Classifying ${i + 1}/${ex.length}…`;
+      preds.push(argmax(await scores(ex[i].text)));
+    }
+    const r = evaluate(trueLabels, preds);
+    $("evalout").hidden = false;
+    $("m-acc").textContent = r.accuracy.toFixed(3);
+    $("m-f1").textContent = r.macroF1.toFixed(3);
+    $("m-n").textContent = ex.length;
+    $("perclass").innerHTML = r.perClass.map((c) =>
+      `<tr><td>${c.label}</td><td class="num">${c.precision.toFixed(3)}</td>` +
+      `<td class="num">${c.recall.toFixed(3)}</td><td class="num">${c.f1.toFixed(3)}</td>` +
+      `<td class="num">${c.support}</td></tr>`).join("");
+    const rowNames = ["true hate", "true off", "true neither"];
+    $("cm").innerHTML = r.cm.map((row, i) =>
+      `<tr><th>${rowNames[i]}</th>` +
+      row.map((v, j) => `<td class="num ${i === j ? "diag" : ""}">${v}</td>`).join("") +
+      `</tr>`).join("");
+    $("evalstatus").textContent = "Done.";
+  } catch (e) {
+    $("evalstatus").textContent = "Error: " + e.message;
+  } finally {
+    $("runeval").disabled = false;
+  }
+});
+</script>
+</body>
+</html>
