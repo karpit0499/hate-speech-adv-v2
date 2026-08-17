@@ -36,7 +36,43 @@ That has a few nice consequences:
 
 ## A note on the numbers
 
-The **Run evaluation** panel in the demo uses a small, hand-picked set of examples so you can watch the model be scored in real time. It is deliberately labelled *illustrative*. The model's real, headline performance numbers come from a proper held-out test set and are described in the [technical documentation](./TECHNICAL_DOCUMENTATION.md).
+The **Run evaluation** panel in the demo uses a small, hand-picked set of examples so you can watch the model be scored in real time. It is deliberately labelled *illustrative*. The model's headline performance numbers come from the stratified test split reproduced below.
+
+## Reproduced held-out evaluation
+
+The results below were reproduced from the published model files, not copied from a training log. The source dataset has 24,783 rows. It is split 80/20 with Hugging Face `datasets`, then that 20% holdout is split 50/50 into validation and test partitions. Both operations are stratified on the label and use `seed=42`. The final test partition has 2,479 examples: 143 `hate_speech`, 1,919 `offensive`, and 417 `neither`.
+
+| Published artifact | Accuracy | Macro precision | Macro recall | Macro F1 | Weighted F1 |
+|---|---:|---:|---:|---:|---:|
+| fp32 PyTorch | 0.897943 | 0.744599 | 0.821070 | **0.775119** | 0.904605 |
+| dynamic-int8 ONNX used by the browser demo | 0.895926 | 0.742197 | 0.814916 | **0.770863** | 0.902794 |
+
+The full-precision per-class results are:
+
+| Class | Precision | Recall | F1 | Support |
+|---|---:|---:|---:|---:|
+| `hate_speech` | 0.420561 | 0.629371 | 0.504202 | 143 |
+| `offensive` | 0.967421 | 0.912976 | 0.939410 | 1,919 |
+| `neither` | 0.845815 | 0.920863 | 0.881745 | 417 |
+
+Its confusion matrix (rows = true label, columns = predicted label, order = `hate_speech`, `offensive`, `neither`) is:
+
+```text
+[[  90,   38,  15],
+ [ 112, 1752,  55],
+ [  12,   21, 384]]
+```
+
+Dynamic int8 quantization cuts the ONNX file from 498,873,677 to 125,528,915 bytes: a **74.84% (3.97×) size reduction**. On an Apple M4 Pro (14-core CPU, 24 GB RAM), native ONNX Runtime 1.18.1 `CPUExecutionProvider` inference for the committed 14-token demo sentence measured **4.53 ms p50 / 5.56 ms p95** at batch size 1 after 25 warm-up runs over 500 measured runs. Including tokenization, it measured **4.86 ms p50 / 6.14 ms p95**. These are local native-runtime figures, not browser/WASM latency.
+
+Exact dataset/model revisions, file hashes, the q8 per-class results, and the benchmark distribution are in [`evaluation/metrics.json`](./evaluation/metrics.json). Reproduce them with:
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r evaluation/requirements.txt
+python evaluation/evaluate.py
+```
 
 ## Under the hood (one line)
 

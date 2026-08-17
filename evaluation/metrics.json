@@ -1,0 +1,289 @@
+{
+  "generated_at_utc": "2026-08-17T19:45:13.134270+00:00",
+  "source_repository": {
+    "url": "https://github.com/karpit0499/hate-speech-adv-v2",
+    "evaluated_base_commit": "8e6cde0004b321e835979fcdeeab4576aeb1284c",
+    "note": "This is the repository commit inspected before the reproducibility files were added."
+  },
+  "dataset": {
+    "repository": "tdavidson/hate_speech_offensive",
+    "revision": "adc5fb774614827695774f2dbe0ea8122f6a92b4",
+    "source_rows": 24783
+  },
+  "split": {
+    "method": "datasets.Dataset.train_test_split(test_size=0.20, seed=42, stratify_by_column='class'), then split the 20% holdout with test_size=0.50 using the same seed and stratification; evaluate the second split's test partition",
+    "sizes": {
+      "train": 19826,
+      "validation": 2478,
+      "test": 2479
+    },
+    "test_support": {
+      "hate_speech": 143,
+      "offensive": 1919,
+      "neither": 417
+    },
+    "ordered_test_source_row_ids_sha256": "0db4d324835cc7eb5086c91345cf56004025af2214e1e361dc9e0667c0079b04"
+  },
+  "labels_in_model_order": [
+    "hate_speech",
+    "offensive",
+    "neither"
+  ],
+  "software": {
+    "python": "3.12.10",
+    "datasets": "2.21.0",
+    "huggingface_hub": "0.24.6",
+    "numpy": "1.26.4",
+    "onnxruntime": "1.18.1",
+    "scikit_learn": "1.5.1",
+    "torch": "2.4.1",
+    "transformers": "4.44.2"
+  },
+  "hardware": {
+    "platform": "macOS-26.6.1-arm64-arm-64bit",
+    "machine": "arm64",
+    "processor": "arm",
+    "logical_cpu_count": 14,
+    "cpu_brand": "Apple M4 Pro",
+    "memory_bytes": 25769803776
+  },
+  "results": {
+    "q8_onnx": {
+      "n": 2479,
+      "accuracy": 0.8959257765227915,
+      "per_class": {
+        "hate_speech": {
+          "precision": 0.41203703703703703,
+          "recall": 0.6223776223776224,
+          "f1": 0.4958217270194986,
+          "support": 143
+        },
+        "offensive": {
+          "precision": 0.9647771051183269,
+          "recall": 0.9134966128191766,
+          "f1": 0.9384368308351178,
+          "support": 1919
+        },
+        "neither": {
+          "precision": 0.8497757847533632,
+          "recall": 0.9088729016786571,
+          "f1": 0.8783314020857474,
+          "support": 417
+        }
+      },
+      "macro_avg": {
+        "precision": 0.742196642302909,
+        "recall": 0.8149157122918188,
+        "f1": 0.7708633199801213,
+        "support": 2479
+      },
+      "weighted_avg": {
+        "precision": 0.9135478270514394,
+        "recall": 0.8959257765227915,
+        "f1": 0.90279426381853,
+        "support": 2479
+      },
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          89,
+          40,
+          14
+        ],
+        [
+          113,
+          1753,
+          53
+        ],
+        [
+          14,
+          24,
+          379
+        ]
+      ],
+      "classification_report": {
+        "hate_speech": {
+          "precision": 0.41203703703703703,
+          "recall": 0.6223776223776224,
+          "f1-score": 0.4958217270194986,
+          "support": 143.0
+        },
+        "offensive": {
+          "precision": 0.9647771051183269,
+          "recall": 0.9134966128191766,
+          "f1-score": 0.9384368308351178,
+          "support": 1919.0
+        },
+        "neither": {
+          "precision": 0.8497757847533632,
+          "recall": 0.9088729016786571,
+          "f1-score": 0.8783314020857474,
+          "support": 417.0
+        },
+        "accuracy": 0.8959257765227915,
+        "macro avg": {
+          "precision": 0.742196642302909,
+          "recall": 0.8149157122918188,
+          "f1-score": 0.7708633199801213,
+          "support": 2479.0
+        },
+        "weighted avg": {
+          "precision": 0.9135478270514394,
+          "recall": 0.8959257765227915,
+          "f1-score": 0.90279426381853,
+          "support": 2479.0
+        }
+      },
+      "artifact": {
+        "repository": "kmrarpit2704/hs-roberta-v2-onnx",
+        "revision": "7c7c7c63c53f0e8373e5171c85c7e4a1a9a7e267",
+        "file": "onnx/model_quantized.onnx",
+        "size_bytes": 125528915,
+        "sha256": "5c5b3893502a6de4af1bee2369814ca04adcbeeb5ea80b57f77274c4ab05e988",
+        "fp32_onnx_size_bytes": 498873677,
+        "fp32_onnx_sha256": "ac00bc55140e950ff92bd8a85b93a2bcfda439eb8cff6f1a2efcfe1bf6c40150",
+        "size_reduction_vs_fp32_onnx_percent": 74.83753487358284,
+        "fp32_onnx_to_q8_size_ratio": 3.97417341653913
+      },
+      "evaluation_runtime": {
+        "provider": [
+          "CPUExecutionProvider"
+        ],
+        "batch_size": 32,
+        "max_length": 256,
+        "elapsed_seconds_including_tokenization": 38.8526336249779,
+        "model_elapsed_seconds": 38.669946629786864,
+        "examples_per_second_including_tokenization": 63.80519848225373,
+        "model_examples_per_second": 64.10663101589245
+      },
+      "latency_benchmark": {
+        "scope": "Native ONNX Runtime CPUExecutionProvider on this machine; this is not a browser/WASM benchmark",
+        "batch_size": 1,
+        "input_text": "The service was slow but the staff were friendly and helpful.",
+        "input_token_count_including_special_tokens": 14,
+        "warmup_runs": 25,
+        "measured_runs": 500,
+        "onnxruntime_session_threads": {
+          "intra_op_num_threads": 0,
+          "inter_op_num_threads": 0,
+          "meaning": "ONNX Runtime defaults"
+        },
+        "model_only": {
+          "mean_ms": 4.648353284000001,
+          "p50_ms": 4.533813,
+          "p95_ms": 5.560705949999997,
+          "p99_ms": 7.469087329999999,
+          "min_ms": 3.9755,
+          "max_ms": 8.463084
+        },
+        "tokenization_plus_model": {
+          "mean_ms": 5.006226566,
+          "p50_ms": 4.857,
+          "p95_ms": 6.138010399999998,
+          "p99_ms": 7.706233249999999,
+          "min_ms": 4.25925,
+          "max_ms": 9.4245
+        }
+      }
+    },
+    "fp32_pytorch": {
+      "n": 2479,
+      "accuracy": 0.8979427188382412,
+      "per_class": {
+        "hate_speech": {
+          "precision": 0.4205607476635514,
+          "recall": 0.6293706293706294,
+          "f1": 0.5042016806722689,
+          "support": 143
+        },
+        "offensive": {
+          "precision": 0.9674213141910547,
+          "recall": 0.9129755080771235,
+          "f1": 0.9394101876675603,
+          "support": 1919
+        },
+        "neither": {
+          "precision": 0.8458149779735683,
+          "recall": 0.920863309352518,
+          "f1": 0.8817451205510907,
+          "support": 417
+        }
+      },
+      "macro_avg": {
+        "precision": 0.7445990132760582,
+        "recall": 0.8210698156000903,
+        "f1": 0.7751189962969732,
+        "support": 2479
+      },
+      "weighted_avg": {
+        "precision": 0.9154201430671641,
+        "recall": 0.8979427188382412,
+        "f1": 0.9046053673820039,
+        "support": 2479
+      },
+      "confusion_matrix_rows_true_columns_predicted": [
+        [
+          90,
+          38,
+          15
+        ],
+        [
+          112,
+          1752,
+          55
+        ],
+        [
+          12,
+          21,
+          384
+        ]
+      ],
+      "classification_report": {
+        "hate_speech": {
+          "precision": 0.4205607476635514,
+          "recall": 0.6293706293706294,
+          "f1-score": 0.5042016806722689,
+          "support": 143.0
+        },
+        "offensive": {
+          "precision": 0.9674213141910547,
+          "recall": 0.9129755080771235,
+          "f1-score": 0.9394101876675603,
+          "support": 1919.0
+        },
+        "neither": {
+          "precision": 0.8458149779735683,
+          "recall": 0.920863309352518,
+          "f1-score": 0.8817451205510907,
+          "support": 417.0
+        },
+        "accuracy": 0.8979427188382412,
+        "macro avg": {
+          "precision": 0.7445990132760582,
+          "recall": 0.8210698156000903,
+          "f1-score": 0.7751189962969732,
+          "support": 2479.0
+        },
+        "weighted avg": {
+          "precision": 0.9154201430671641,
+          "recall": 0.8979427188382412,
+          "f1-score": 0.9046053673820039,
+          "support": 2479.0
+        }
+      },
+      "artifact": {
+        "repository": "kmrarpit2704/hs-roberta-v2",
+        "revision": "bcaa0d20b4dd0d7af95ae732d9007893328206ae",
+        "file": "model.safetensors",
+        "size_bytes": 498615900,
+        "sha256": "ab384f358290dba051b192efa58a7b472396784fb07c44b9a1be969669846b8c"
+      },
+      "evaluation_runtime": {
+        "device": "cpu",
+        "batch_size": 32,
+        "max_length": 256,
+        "elapsed_seconds": 27.365356666967273,
+        "examples_per_second": 90.58898921615011
+      }
+    }
+  }
+}
