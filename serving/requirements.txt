@@ -1,4 +1,4 @@
-transformers==4.44.2
+transformers==5.5.0
 fastapi==0.114.0
 uvicorn==0.30.6
 huggingface_hub==0.24.6
