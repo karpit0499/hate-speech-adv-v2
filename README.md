@@ -1,82 +1,117 @@
-# hate-speech-adv v2
+# Hate-speech classifier: browser demo and defensible evaluation
 
-A hate-speech text classifier that runs **entirely in your browser** — no sign-up, no server, nothing to install.
+This repository contains a three-class text classifier (`hate_speech`,
+`offensive`, `neither`), a fully local browser demo, a hardened FastAPI serving
+path, and a leakage-resistant evaluation protocol.
 
-### 🔗 Try the live demo
+**Live demo:** https://karpit0499.github.io/hate-speech-adv-v2/
 
-**https://karpit0499.github.io/hate-speech-adv-v2/**
+The browser performs classification locally with Transformers.js and WebAssembly.
+Text entered for classification is not sent to this repository's server. The demo
+currently loads the pinned historical q8 artifact at revision
+`7c7c7c63c53f0e8373e5171c85c7e4a1a9a7e267`; its evaluation status is explained
+below.
 
-Type a sentence, click **Classify**, and the model tells you which of three categories it falls into. You can also click **Run evaluation** to watch the model score a set of example sentences live.
+## Evaluation status
 
-> The first classification takes a few seconds while the model file downloads to your browser (about 125 MB). Every classification after that is instant, because your browser keeps it cached.
+`grouped_v1` is the only protocol eligible for new model claims. It groups
+case/HTML/retweet/URL/handle-normalized duplicates before splitting, keeps the
+test membership outside Git, and physically separates train/validation data from
+the frozen test.
 
----
+The source has 24,783 rows and 24,556 normalized template groups. The audit found
+121 duplicate groups containing 348 rows, including 12 groups with conflicting
+labels. It also found substantial annotator ambiguity: 7,301 rows are
+non-unanimous. Grouping keeps **zero** raw, strict-normalized, or
+template-normalized groups across partitions.
 
-## What it does
+Current public evidence is validation-only:
 
-The model reads a short piece of text and sorts it into one of three categories:
+| Fixed baseline | Validation macro-F1 | Hate recall | Hate precision |
+|---|---:|---:|---:|
+| majority class | 0.2909 | 0.0000 | 0.0000 |
+| TF-IDF word+character logistic regression | 0.7320 | 0.4126 | 0.3665 |
 
-| Category | Meaning |
-|----------|---------|
-| **hate speech** | Attacks or dehumanizes people because of who they are (e.g. religion, ethnicity, gender, sexual orientation, disability). |
-| **offensive** | Rude, insulting, or crude, but **not** aimed at a group of people. |
-| **neither** | Neutral, positive, or otherwise fine. |
+These figures use three declared seeds, 2,000 group-aware bootstrap resamples, and
+the ambiguity and hard-negative slices in
+[`evaluation/results/grouped_v1_baselines.json`](./evaluation/results/grouped_v1_baselines.json).
+The frozen test has not been used for model inference or model selection at this
+stage. The 27-run Transformer matrix, fixed-seed artifact export, fp32-to-q8 gate,
+and one-way test opening are specified in
+[`evaluation/PROTOCOL.md`](./evaluation/PROTOCOL.md).
 
-Alongside the category, it shows a confidence score and a simple breakdown of how sure it was for each of the three options.
+### Historical artifact — not eligible
 
-## How it works (in plain terms)
+The deployed browser model came from a seed-42 row-stratified workflow that did not
+group normalized duplicates: 57 normalized groups crossed its partitions. Its old
+test recipe and score file have been retired so they cannot be mistaken for current
+evidence or used to reconstruct the superseded split. The artifact remains available
+only to keep the browser demo operational until a `grouped_v1` winner passes export,
+q8 validation, frozen testing, and publication.
 
-Most "AI moderation" tools send your text off to a large language model somewhere on the internet. This one is different: it's a small, specialized model that was **trained specifically for this three-way task**, and it's small enough to run right inside your web browser.
+## Browser runtime evidence
 
-That has a few nice consequences:
+The checked Chrome benchmark measures the pinned historical q8 artifact in the
+actual JavaScript/WebAssembly path, not native ONNX Runtime:
 
-- **Private** — your text never leaves your device during classification.
-- **Free and always-on** — there's no backend to pay for or keep running.
-- **Fast and consistent** — the same input always gives the same answer.
+| Input length (tokens) | Warm p50 | Warm p95 | Queries |
+|---:|---:|---:|---:|
+| 10 | 41.00 ms | 41.70 ms | 30 |
+| 34 | 118.00 ms | 118.85 ms | 30 |
+| 130 | 439.75 ms | 446.67 ms | 30 |
+| 258 | 894.45 ms | 897.32 ms | 30 |
 
-## A note on the numbers
+The first pipeline initialization observed in that run was 13.61 seconds and
+included a 125,528,915-byte q8 model transfer. Browser caches were not cleared, so
+this is not a guaranteed cold-load measurement. The recorded ~2.57 MB heap change
+covers JavaScript heap only; it is not total browser or WASM memory. Raw timings,
+environment details, failures, and byte counts are in
+[`benchmarks/browser/runtime_chrome_151_macos_2026-08-20.json`](./benchmarks/browser/runtime_chrome_151_macos_2026-08-20.json).
 
-The **Run evaluation** panel in the demo uses a small, hand-picked set of examples so you can watch the model be scored in real time. It is deliberately labelled *illustrative*. The model's headline performance numbers come from the stratified test split reproduced below.
+## Reproduce the sealed protocol foundation
 
-## Reproduced held-out evaluation
-
-The results below were reproduced from the published model files, not copied from a training log. The source dataset has 24,783 rows. It is split 80/20 with Hugging Face `datasets`, then that 20% holdout is split 50/50 into validation and test partitions. Both operations are stratified on the label and use `seed=42`. The final test partition has 2,479 examples: 143 `hate_speech`, 1,919 `offensive`, and 417 `neither`.
-
-| Published artifact | Accuracy | Macro precision | Macro recall | Macro F1 | Weighted F1 |
-|---|---:|---:|---:|---:|---:|
-| fp32 PyTorch | 0.897943 | 0.744599 | 0.821070 | **0.775119** | 0.904605 |
-| dynamic-int8 ONNX used by the browser demo | 0.895926 | 0.742197 | 0.814916 | **0.770863** | 0.902794 |
-
-The full-precision per-class results are:
-
-| Class | Precision | Recall | F1 | Support |
-|---|---:|---:|---:|---:|
-| `hate_speech` | 0.420561 | 0.629371 | 0.504202 | 143 |
-| `offensive` | 0.967421 | 0.912976 | 0.939410 | 1,919 |
-| `neither` | 0.845815 | 0.920863 | 0.881745 | 417 |
-
-Its confusion matrix (rows = true label, columns = predicted label, order = `hate_speech`, `offensive`, `neither`) is:
-
-```text
-[[  90,   38,  15],
- [ 112, 1752,  55],
- [  12,   21, 384]]
-```
-
-Dynamic int8 quantization cuts the ONNX file from 498,873,677 to 125,528,915 bytes: a **74.84% (3.97×) size reduction**. On an Apple M4 Pro (14-core CPU, 24 GB RAM), native ONNX Runtime 1.18.1 `CPUExecutionProvider` inference for the committed 14-token demo sentence measured **4.53 ms p50 / 5.56 ms p95** at batch size 1 after 25 warm-up runs over 500 measured runs. Including tokenization, it measured **4.86 ms p50 / 6.14 ms p95**. These are local native-runtime figures, not browser/WASM latency.
-
-Exact dataset/model revisions, file hashes, the q8 per-class results, and the benchmark distribution are in [`evaluation/metrics.json`](./evaluation/metrics.json). Reproduce them with:
+Use Python 3.12 and keep the 64-hex-character split secret outside the repository:
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-pip install -r evaluation/requirements.txt
-python evaluation/evaluate.py
+python3.12 -m venv .venv
+.venv/bin/pip install -r requirements/dev.txt
+.venv/bin/python evaluation/build_manifest.py \
+  --private-output /protected/path/grouped_v1_train_validation.json \
+  --split-secret-file /protected/path/grouped_v1_split_secret
+.venv/bin/python evaluation/validate_manifest.py
+.venv/bin/python training/run_matrix.py --smoke
+.venv/bin/python -m pytest -q
 ```
 
-## Under the hood (one line)
+The private train/validation artifact is mode `0600` and ignored. Public manifests
+contain commitments and aggregate support only—no row IDs, text, labels, or split
+assignments. Opening the test requires a committed full-matrix selection receipt,
+the protected secret, an explicit acknowledgement, and a durable create-once
+ledger written before any source-data access.
 
-A RoBERTa text-classification model, fine-tuned with LoRA on a public labelled dataset, exported to ONNX and served in-browser via transformers.js. The full pipeline (training, serving, deployment) is described in **[TECHNICAL_DOCUMENTATION.md](./TECHNICAL_DOCUMENTATION.md)**.
+## Serving and security
+
+- The browser path is local-only and has no rationale API or remote LLM fallback.
+- The FastAPI service validates bounded input, redacts raw text by default, and
+  loads a revision-pinned model.
+- The container runs as a non-root user; the Kubernetes example uses a read-only
+  root filesystem, drops Linux capabilities, disables service-account token
+  mounting, and declares resource limits.
+- GitHub Actions use least permissions and immutable action SHAs. Dependabot,
+  dependency review, CodeQL, secret scanning, and push protection are enabled.
+
+## Limitations
+
+- Dataset labels are crowd annotations and are frequently disputed, especially in
+  the hate-speech class. Slice results must be read alongside aggregate metrics.
+- The current live demo is the historical q8 artifact; a new grouped-protocol
+  winner is not represented there until its export gate and publication complete.
+- This classifier is a research/portfolio system, not a moderation policy or a
+  substitute for human review. Errors can create real harm.
+
+See [`TECHNICAL_DOCUMENTATION.md`](./TECHNICAL_DOCUMENTATION.md) for component
+contracts and [`evaluation/PROTOCOL.md`](./evaluation/PROTOCOL.md) for the frozen
+evaluation procedure.
 
 ## License
 

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "protocol_id": "grouped_v1",
+  "candidate": "current_lora_weighted_ce",
+  "seed": 13,
+  "max_train_rows": 12,
+  "max_validation_rows": 6,
+  "max_steps": 1,
+  "offline": true,
+  "network_access": "forbidden",
+  "model": "tiny_local_roberta_lora_v1"
+}

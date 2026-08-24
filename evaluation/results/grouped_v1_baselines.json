@@ -1,0 +1,4291 @@
+{
+  "schema_version": 2,
+  "protocol_id": "grouped_v1",
+  "public_manifest_payload_sha256": "76f3d485e232dc8932bf0688294360077119cc14c04da453e8720b3dc803e7e4",
+  "evaluated_splits": [
+    "train",
+    "validation"
+  ],
+  "frozen_test_loaded": false,
+  "seeds": [
+    13,
+    42,
+    73
+  ],
+  "bootstrap_resamples": 2000,
+  "software": {
+    "python": "3.12.13",
+    "scikit_learn": "1.9.0",
+    "numpy": "2.5.2"
+  },
+  "provenance": {
+    "slices_sha256": "034f39335b6e02290acf3a4bc598a6d9202129d30d7745d085f4adba9de3d711",
+    "slices_semantic_sha256": "48ba2271ecfe24ba801ddb01dec2c85307c63081ee4c2044e8c3955560ee91bb"
+  },
+  "feature_configuration": {
+    "word_ngrams": [
+      1,
+      2
+    ],
+    "word_max_features": 30000,
+    "character_ngrams": [
+      3,
+      5
+    ],
+    "character_max_features": 40000,
+    "class_weight": "balanced",
+    "solver": "liblinear",
+    "C": 4.0
+  },
+  "runs": [
+    {
+      "candidate_id": "majority",
+      "seed": 13,
+      "evaluated_split": "validation",
+      "train_metrics": {
+        "n": 19826,
+        "accuracy": 0.7743367295470595,
+        "macro_precision": 0.25811224318235315,
+        "macro_recall": 0.3333333333333333,
+        "macro_f1": 0.2909394128906324,
+        "weighted_f1": 0.6758552204222217,
+        "hate_speech_precision": 0.0,
+        "hate_speech_recall": 0.0,
+        "hate_speech_f1": 0.0,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 1144
+          },
+          "offensive": {
+            "precision": 0.7743367295470595,
+            "recall": 1.0,
+            "f1": 0.8728182386718972,
+            "support": 15352
+          },
+          "neither": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3330
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            0,
+            1144,
+            0
+          ],
+          [
+            0,
+            15352,
+            0
+          ],
+          [
+            0,
+            3330,
+            0
+          ]
+        ]
+      },
+      "metrics": {
+        "n": 2479,
+        "accuracy": 0.7741024606696248,
+        "macro_precision": 0.25803415355654163,
+        "macro_recall": 0.3333333333333333,
+        "macro_f1": 0.290889798393209,
+        "weighted_f1": 0.6755355261596225,
+        "hate_speech_precision": 0.0,
+        "hate_speech_recall": 0.0,
+        "hate_speech_f1": 0.0,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 143
+          },
+          "offensive": {
+            "precision": 0.7741024606696248,
+            "recall": 1.0,
+            "f1": 0.872669395179627,
+            "support": 1919
+          },
+          "neither": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 417
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            0,
+            143,
+            0
+          ],
+          [
+            0,
+            1919,
+            0
+          ],
+          [
+            0,
+            417,
+            0
+          ]
+        ]
+      },
+      "validation_group_bootstrap": {
+        "macro_f1": {
+          "estimate": 0.290889798393209,
+          "confidence": 0.95,
+          "lower": 0.2872294747557503,
+          "upper": 0.2943089643912695,
+          "bootstrap_mean": 0.2909002853659811,
+          "bootstrap_standard_error": 0.0018486133821826233,
+          "resamples": 2000,
+          "seed": 13,
+          "groups": 2453
+        },
+        "hate_speech_recall": {
+          "estimate": 0.0,
+          "confidence": 0.95,
+          "lower": 0.0,
+          "upper": 0.0,
+          "bootstrap_mean": 0.0,
+          "bootstrap_standard_error": 0.0,
+          "resamples": 2000,
+          "seed": 13,
+          "groups": 2453
+        }
+      },
+      "slice_metrics": {
+        "ambiguity_slices": {
+          "unanimous": {
+            "support": 1755,
+            "metrics": {
+              "n": 1755,
+              "accuracy": 0.8216524216524217,
+              "macro_precision": 0.27388414055080723,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3006985715775206,
+              "weighted_f1": 0.7412091285722815,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 23
+                },
+                "offensive": {
+                  "precision": 0.8216524216524217,
+                  "recall": 1.0,
+                  "f1": 0.9020957147325618,
+                  "support": 1442
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 290
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  23,
+                  0
+                ],
+                [
+                  0,
+                  1442,
+                  0
+                ],
+                [
+                  0,
+                  290,
+                  0
+                ]
+              ]
+            }
+          },
+          "disputed": {
+            "support": 724,
+            "metrics": {
+              "n": 724,
+              "accuracy": 0.6588397790055248,
+              "macro_precision": 0.21961325966850828,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.26477935054121565,
+              "weighted_f1": 0.5233415063874028,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 120
+                },
+                "offensive": {
+                  "precision": 0.6588397790055248,
+                  "recall": 1.0,
+                  "f1": 0.794338051623647,
+                  "support": 477
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 127
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  120,
+                  0
+                ],
+                [
+                  0,
+                  477,
+                  0
+                ],
+                [
+                  0,
+                  127,
+                  0
+                ]
+              ]
+            }
+          },
+          "one_vote_margin": {
+            "support": 660,
+            "metrics": {
+              "n": 660,
+              "accuracy": 0.646969696969697,
+              "macro_precision": 0.21565656565656566,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.26188285801901257,
+              "weighted_f1": 0.5082908198823561,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 117
+                },
+                "offensive": {
+                  "precision": 0.646969696969697,
+                  "recall": 1.0,
+                  "f1": 0.7856485740570377,
+                  "support": 427
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 116
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  117,
+                  0
+                ],
+                [
+                  0,
+                  427,
+                  0
+                ],
+                [
+                  0,
+                  116,
+                  0
+                ]
+              ]
+            }
+          },
+          "low_consensus": {
+            "support": 5,
+            "metrics": {
+              "n": 5,
+              "accuracy": 0.4,
+              "macro_precision": 0.13333333333333333,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.19047619047619047,
+              "weighted_f1": 0.22857142857142856,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 3
+                },
+                "offensive": {
+                  "precision": 0.4,
+                  "recall": 1.0,
+                  "f1": 0.5714285714285714,
+                  "support": 2
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "hard_negative_slices": {
+          "offensive_not_hate": {
+            "support": 1919,
+            "metrics": {
+              "n": 1919,
+              "accuracy": 1.0,
+              "macro_precision": 0.3333333333333333,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3333333333333333,
+              "weighted_f1": 1.0,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "f1": 1.0,
+                  "support": 1919
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1919,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_identity_mention": {
+            "support": 152,
+            "metrics": {
+              "n": 152,
+              "accuracy": 0.8092105263157895,
+              "macro_precision": 0.26973684210526316,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.29818181818181816,
+              "weighted_f1": 0.7238755980861244,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.8092105263157895,
+                  "recall": 1.0,
+                  "f1": 0.8945454545454545,
+                  "support": 123
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 29
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  123,
+                  0
+                ],
+                [
+                  0,
+                  29,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_profanity": {
+            "support": 149,
+            "metrics": {
+              "n": 149,
+              "accuracy": 0.9731543624161074,
+              "macro_precision": 0.3243847874720358,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3287981859410431,
+              "weighted_f1": 0.9599141670090855,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9731543624161074,
+                  "recall": 1.0,
+                  "f1": 0.9863945578231292,
+                  "support": 145
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 4
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  145,
+                  0
+                ],
+                [
+                  0,
+                  4,
+                  0
+                ]
+              ]
+            }
+          },
+          "short_non_hate": {
+            "support": 200,
+            "metrics": {
+              "n": 200,
+              "accuracy": 0.86,
+              "macro_precision": 0.2866666666666667,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3082437275985663,
+              "weighted_f1": 0.795268817204301,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.86,
+                  "recall": 1.0,
+                  "f1": 0.9247311827956989,
+                  "support": 172
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 28
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  172,
+                  0
+                ],
+                [
+                  0,
+                  28,
+                  0
+                ]
+              ]
+            }
+          },
+          "negated_or_counter_non_hate": {
+            "support": 27,
+            "metrics": {
+              "n": 27,
+              "accuracy": 0.7777777777777778,
+              "macro_precision": 0.25925925925925924,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.2916666666666667,
+              "weighted_f1": 0.6805555555555556,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.7777777777777778,
+                  "recall": 1.0,
+                  "f1": 0.875,
+                  "support": 21
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 6
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  21,
+                  0
+                ],
+                [
+                  0,
+                  6,
+                  0
+                ]
+              ]
+            }
+          },
+          "quoted_or_reported_non_hate": {
+            "support": 418,
+            "metrics": {
+              "n": 418,
+              "accuracy": 0.8516746411483254,
+              "macro_precision": 0.2838915470494418,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3066322136089578,
+              "weighted_f1": 0.7834526414697773,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.8516746411483254,
+                  "recall": 1.0,
+                  "f1": 0.9198966408268734,
+                  "support": 356
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 62
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  356,
+                  0
+                ],
+                [
+                  0,
+                  62,
+                  0
+                ]
+              ]
+            }
+          },
+          "obfuscated_non_hate": {
+            "support": 804,
+            "metrics": {
+              "n": 804,
+              "accuracy": 0.7848258706467661,
+              "macro_precision": 0.26160862354892206,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.2931475029036005,
+              "weighted_f1": 0.690209232582731,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.7848258706467661,
+                  "recall": 1.0,
+                  "f1": 0.8794425087108014,
+                  "support": 631
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 173
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  631,
+                  0
+                ],
+                [
+                  0,
+                  173,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "tfidf_word_char_logistic",
+      "seed": 13,
+      "evaluated_split": "validation",
+      "train_metrics": {
+        "n": 19826,
+        "accuracy": 0.974931907596086,
+        "macro_precision": 0.9191491444024459,
+        "macro_recall": 0.9884343019048595,
+        "macro_f1": 0.9506836308642254,
+        "weighted_f1": 0.9755224070688392,
+        "hate_speech_precision": 0.8299418604651163,
+        "hate_speech_recall": 0.9982517482517482,
+        "hate_speech_f1": 0.9063492063492063,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.8299418604651163,
+            "recall": 0.9982517482517482,
+            "f1": 0.9063492063492063,
+            "support": 1144
+          },
+          "offensive": {
+            "precision": 0.9997308934337998,
+            "recall": 0.9679520583637311,
+            "f1": 0.9835848557055864,
+            "support": 15352
+          },
+          "neither": {
+            "precision": 0.9277746793084216,
+            "recall": 0.9990990990990991,
+            "f1": 0.9621168305378832,
+            "support": 3330
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            1142,
+            1,
+            1
+          ],
+          [
+            234,
+            14860,
+            258
+          ],
+          [
+            0,
+            3,
+            3327
+          ]
+        ]
+      },
+      "metrics": {
+        "n": 2479,
+        "accuracy": 0.8878580072609923,
+        "macro_precision": 0.7129443015149993,
+        "macro_recall": 0.754856224270375,
+        "macro_f1": 0.7319888176579293,
+        "weighted_f1": 0.8904804540558754,
+        "hate_speech_precision": 0.36645962732919257,
+        "hate_speech_recall": 0.4125874125874126,
+        "hate_speech_f1": 0.3881578947368421,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.36645962732919257,
+            "recall": 0.4125874125874126,
+            "f1": 0.3881578947368421,
+            "support": 143
+          },
+          "offensive": {
+            "precision": 0.9505703422053232,
+            "recall": 0.9119332985930172,
+            "f1": 0.9308510638297872,
+            "support": 1919
+          },
+          "neither": {
+            "precision": 0.8218029350104822,
+            "recall": 0.9400479616306955,
+            "f1": 0.8769574944071589,
+            "support": 417
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            59,
+            68,
+            16
+          ],
+          [
+            100,
+            1750,
+            69
+          ],
+          [
+            2,
+            23,
+            392
+          ]
+        ]
+      },
+      "solver": "OneVsRestClassifier(LogisticRegression(liblinear))",
+      "iterations": [
+        7,
+        7,
+        8
+      ],
+      "validation_group_bootstrap": {
+        "macro_f1": {
+          "estimate": 0.7319888176579293,
+          "confidence": 0.95,
+          "lower": 0.703738623736706,
+          "upper": 0.7576923089479288,
+          "bootstrap_mean": 0.7317258795045208,
+          "bootstrap_standard_error": 0.013571536659290218,
+          "resamples": 2000,
+          "seed": 13,
+          "groups": 2453
+        },
+        "hate_speech_recall": {
+          "estimate": 0.4125874125874126,
+          "confidence": 0.95,
+          "lower": 0.3259126984126985,
+          "upper": 0.5032690559667575,
+          "bootstrap_mean": 0.4123828175377114,
+          "bootstrap_standard_error": 0.045466938190298824,
+          "resamples": 2000,
+          "seed": 13,
+          "groups": 2453
+        }
+      },
+      "slice_metrics": {
+        "ambiguity_slices": {
+          "unanimous": {
+            "support": 1755,
+            "metrics": {
+              "n": 1755,
+              "accuracy": 0.9481481481481482,
+              "macro_precision": 0.7163243144628368,
+              "macro_recall": 0.8699506002893145,
+              "macro_f1": 0.7606254027094295,
+              "weighted_f1": 0.9545878544575037,
+              "hate_speech_precision": 0.26666666666666666,
+              "hate_speech_recall": 0.6956521739130435,
+              "hate_speech_f1": 0.3855421686746988,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.26666666666666666,
+                  "recall": 0.6956521739130435,
+                  "f1": 0.3855421686746988,
+                  "support": 23
+                },
+                "offensive": {
+                  "precision": 0.9905865314989138,
+                  "recall": 0.9486823855755895,
+                  "f1": 0.9691817215727949,
+                  "support": 1442
+                },
+                "neither": {
+                  "precision": 0.89171974522293,
+                  "recall": 0.9655172413793104,
+                  "f1": 0.9271523178807947,
+                  "support": 290
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  16,
+                  4,
+                  3
+                ],
+                [
+                  43,
+                  1368,
+                  31
+                ],
+                [
+                  1,
+                  9,
+                  280
+                ]
+              ]
+            }
+          },
+          "disputed": {
+            "support": 724,
+            "metrics": {
+              "n": 724,
+              "accuracy": 0.7417127071823204,
+              "macro_precision": 0.6477646404277665,
+              "macro_recall": 0.6803538905121137,
+              "macro_f1": 0.658974086989353,
+              "weighted_f1": 0.7371878646028734,
+              "hate_speech_precision": 0.42574257425742573,
+              "hate_speech_recall": 0.35833333333333334,
+              "hate_speech_f1": 0.3891402714932127,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.42574257425742573,
+                  "recall": 0.35833333333333334,
+                  "f1": 0.3891402714932127,
+                  "support": 120
+                },
+                "offensive": {
+                  "precision": 0.8304347826086956,
+                  "recall": 0.80083857442348,
+                  "f1": 0.8153681963713981,
+                  "support": 477
+                },
+                "neither": {
+                  "precision": 0.6871165644171779,
+                  "recall": 0.8818897637795275,
+                  "f1": 0.7724137931034483,
+                  "support": 127
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  43,
+                  64,
+                  13
+                ],
+                [
+                  57,
+                  382,
+                  38
+                ],
+                [
+                  1,
+                  14,
+                  112
+                ]
+              ]
+            }
+          },
+          "one_vote_margin": {
+            "support": 660,
+            "metrics": {
+              "n": 660,
+              "accuracy": 0.7212121212121212,
+              "macro_precision": 0.6341267639741981,
+              "macro_recall": 0.6677728035839964,
+              "macro_f1": 0.6456599269051583,
+              "weighted_f1": 0.716189205901736,
+              "hate_speech_precision": 0.41836734693877553,
+              "hate_speech_recall": 0.3504273504273504,
+              "hate_speech_f1": 0.3813953488372093,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.41836734693877553,
+                  "recall": 0.3504273504273504,
+                  "f1": 0.3813953488372093,
+                  "support": 117
+                },
+                "offensive": {
+                  "precision": 0.8106796116504854,
+                  "recall": 0.7822014051522248,
+                  "f1": 0.7961859356376639,
+                  "support": 427
+                },
+                "neither": {
+                  "precision": 0.6733333333333333,
+                  "recall": 0.8706896551724138,
+                  "f1": 0.7593984962406015,
+                  "support": 116
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  41,
+                  64,
+                  12
+                ],
+                [
+                  56,
+                  334,
+                  37
+                ],
+                [
+                  1,
+                  14,
+                  101
+                ]
+              ]
+            }
+          },
+          "low_consensus": {
+            "support": 5,
+            "metrics": {
+              "n": 5,
+              "accuracy": 0.0,
+              "macro_precision": 0.0,
+              "macro_recall": 0.0,
+              "macro_f1": 0.0,
+              "weighted_f1": 0.0,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 3
+                },
+                "offensive": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 2
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "hard_negative_slices": {
+          "offensive_not_hate": {
+            "support": 1919,
+            "metrics": {
+              "n": 1919,
+              "accuracy": 0.9119332985930172,
+              "macro_precision": 0.3333333333333333,
+              "macro_recall": 0.3039777661976724,
+              "macro_f1": 0.3179794676115199,
+              "weighted_f1": 0.9539384028345598,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 0.9119332985930172,
+                  "f1": 0.9539384028345598,
+                  "support": 1919
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  100,
+                  1750,
+                  69
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_identity_mention": {
+            "support": 152,
+            "metrics": {
+              "n": 152,
+              "accuracy": 0.8421052631578947,
+              "macro_precision": 0.62151841868823,
+              "macro_recall": 0.5664891131669937,
+              "macro_f1": 0.5922521004111443,
+              "weighted_f1": 0.8952952940844412,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9716981132075472,
+                  "recall": 0.8373983739837398,
+                  "f1": 0.8995633187772926,
+                  "support": 123
+                },
+                "neither": {
+                  "precision": 0.8928571428571429,
+                  "recall": 0.8620689655172413,
+                  "f1": 0.8771929824561403,
+                  "support": 29
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  17,
+                  103,
+                  3
+                ],
+                [
+                  1,
+                  3,
+                  25
+                ]
+              ]
+            }
+          },
+          "non_hate_profanity": {
+            "support": 149,
+            "metrics": {
+              "n": 149,
+              "accuracy": 0.9530201342281879,
+              "macro_precision": 0.6,
+              "macro_recall": 0.6505747126436782,
+              "macro_f1": 0.6213846355189111,
+              "weighted_f1": 0.972946195418745,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 0.9517241379310345,
+                  "f1": 0.9752650176678446,
+                  "support": 145
+                },
+                "neither": {
+                  "precision": 0.8,
+                  "recall": 1.0,
+                  "f1": 0.8888888888888888,
+                  "support": 4
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  6,
+                  138,
+                  1
+                ],
+                [
+                  0,
+                  0,
+                  4
+                ]
+              ]
+            }
+          },
+          "short_non_hate": {
+            "support": 200,
+            "metrics": {
+              "n": 200,
+              "accuracy": 0.885,
+              "macro_precision": 0.6299909255898367,
+              "macro_recall": 0.6021594684385382,
+              "macro_f1": 0.6147931557288282,
+              "weighted_f1": 0.929324236517219,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.993421052631579,
+                  "recall": 0.877906976744186,
+                  "f1": 0.9320987654320988,
+                  "support": 172
+                },
+                "neither": {
+                  "precision": 0.896551724137931,
+                  "recall": 0.9285714285714286,
+                  "f1": 0.9122807017543859,
+                  "support": 28
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  18,
+                  151,
+                  3
+                ],
+                [
+                  1,
+                  1,
+                  26
+                ]
+              ]
+            }
+          },
+          "negated_or_counter_non_hate": {
+            "support": 27,
+            "metrics": {
+              "n": 27,
+              "accuracy": 0.8518518518518519,
+              "macro_precision": 0.5935672514619883,
+              "macro_recall": 0.5634920634920635,
+              "macro_f1": 0.5777777777777778,
+              "weighted_f1": 0.8851851851851853,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9473684210526315,
+                  "recall": 0.8571428571428571,
+                  "f1": 0.9,
+                  "support": 21
+                },
+                "neither": {
+                  "precision": 0.8333333333333334,
+                  "recall": 0.8333333333333334,
+                  "f1": 0.8333333333333334,
+                  "support": 6
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  18,
+                  1
+                ],
+                [
+                  0,
+                  1,
+                  5
+                ]
+              ]
+            }
+          },
+          "quoted_or_reported_non_hate": {
+            "support": 418,
+            "metrics": {
+              "n": 418,
+              "accuracy": 0.9234449760765551,
+              "macro_precision": 0.5925252525252526,
+              "macro_recall": 0.6233840763561677,
+              "macro_f1": 0.6048888794308129,
+              "weighted_f1": 0.9397010666503481,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.990909090909091,
+                  "recall": 0.9185393258426966,
+                  "f1": 0.9533527696793003,
+                  "support": 356
+                },
+                "neither": {
+                  "precision": 0.7866666666666666,
+                  "recall": 0.9516129032258065,
+                  "f1": 0.8613138686131386,
+                  "support": 62
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  13,
+                  327,
+                  16
+                ],
+                [
+                  0,
+                  3,
+                  59
+                ]
+              ]
+            }
+          },
+          "obfuscated_non_hate": {
+            "support": 804,
+            "metrics": {
+              "n": 804,
+              "accuracy": 0.9054726368159204,
+              "macro_precision": 0.6115334737242865,
+              "macro_recall": 0.6181276317677846,
+              "macro_f1": 0.6125376333916552,
+              "weighted_f1": 0.9293660321836225,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.991166077738516,
+                  "recall": 0.8890649762282092,
+                  "f1": 0.9373433583959899,
+                  "support": 631
+                },
+                "neither": {
+                  "precision": 0.8434343434343434,
+                  "recall": 0.9653179190751445,
+                  "f1": 0.9002695417789758,
+                  "support": 173
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  39,
+                  561,
+                  31
+                ],
+                [
+                  1,
+                  5,
+                  167
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "majority",
+      "seed": 42,
+      "evaluated_split": "validation",
+      "train_metrics": {
+        "n": 19826,
+        "accuracy": 0.7743367295470595,
+        "macro_precision": 0.25811224318235315,
+        "macro_recall": 0.3333333333333333,
+        "macro_f1": 0.2909394128906324,
+        "weighted_f1": 0.6758552204222217,
+        "hate_speech_precision": 0.0,
+        "hate_speech_recall": 0.0,
+        "hate_speech_f1": 0.0,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 1144
+          },
+          "offensive": {
+            "precision": 0.7743367295470595,
+            "recall": 1.0,
+            "f1": 0.8728182386718972,
+            "support": 15352
+          },
+          "neither": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3330
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            0,
+            1144,
+            0
+          ],
+          [
+            0,
+            15352,
+            0
+          ],
+          [
+            0,
+            3330,
+            0
+          ]
+        ]
+      },
+      "metrics": {
+        "n": 2479,
+        "accuracy": 0.7741024606696248,
+        "macro_precision": 0.25803415355654163,
+        "macro_recall": 0.3333333333333333,
+        "macro_f1": 0.290889798393209,
+        "weighted_f1": 0.6755355261596225,
+        "hate_speech_precision": 0.0,
+        "hate_speech_recall": 0.0,
+        "hate_speech_f1": 0.0,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 143
+          },
+          "offensive": {
+            "precision": 0.7741024606696248,
+            "recall": 1.0,
+            "f1": 0.872669395179627,
+            "support": 1919
+          },
+          "neither": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 417
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            0,
+            143,
+            0
+          ],
+          [
+            0,
+            1919,
+            0
+          ],
+          [
+            0,
+            417,
+            0
+          ]
+        ]
+      },
+      "validation_group_bootstrap": {
+        "macro_f1": {
+          "estimate": 0.290889798393209,
+          "confidence": 0.95,
+          "lower": 0.287332373780094,
+          "upper": 0.2943491874462461,
+          "bootstrap_mean": 0.29084609314916,
+          "bootstrap_standard_error": 0.0018211086175652783,
+          "resamples": 2000,
+          "seed": 42,
+          "groups": 2453
+        },
+        "hate_speech_recall": {
+          "estimate": 0.0,
+          "confidence": 0.95,
+          "lower": 0.0,
+          "upper": 0.0,
+          "bootstrap_mean": 0.0,
+          "bootstrap_standard_error": 0.0,
+          "resamples": 2000,
+          "seed": 42,
+          "groups": 2453
+        }
+      },
+      "slice_metrics": {
+        "ambiguity_slices": {
+          "unanimous": {
+            "support": 1755,
+            "metrics": {
+              "n": 1755,
+              "accuracy": 0.8216524216524217,
+              "macro_precision": 0.27388414055080723,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3006985715775206,
+              "weighted_f1": 0.7412091285722815,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 23
+                },
+                "offensive": {
+                  "precision": 0.8216524216524217,
+                  "recall": 1.0,
+                  "f1": 0.9020957147325618,
+                  "support": 1442
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 290
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  23,
+                  0
+                ],
+                [
+                  0,
+                  1442,
+                  0
+                ],
+                [
+                  0,
+                  290,
+                  0
+                ]
+              ]
+            }
+          },
+          "disputed": {
+            "support": 724,
+            "metrics": {
+              "n": 724,
+              "accuracy": 0.6588397790055248,
+              "macro_precision": 0.21961325966850828,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.26477935054121565,
+              "weighted_f1": 0.5233415063874028,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 120
+                },
+                "offensive": {
+                  "precision": 0.6588397790055248,
+                  "recall": 1.0,
+                  "f1": 0.794338051623647,
+                  "support": 477
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 127
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  120,
+                  0
+                ],
+                [
+                  0,
+                  477,
+                  0
+                ],
+                [
+                  0,
+                  127,
+                  0
+                ]
+              ]
+            }
+          },
+          "one_vote_margin": {
+            "support": 660,
+            "metrics": {
+              "n": 660,
+              "accuracy": 0.646969696969697,
+              "macro_precision": 0.21565656565656566,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.26188285801901257,
+              "weighted_f1": 0.5082908198823561,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 117
+                },
+                "offensive": {
+                  "precision": 0.646969696969697,
+                  "recall": 1.0,
+                  "f1": 0.7856485740570377,
+                  "support": 427
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 116
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  117,
+                  0
+                ],
+                [
+                  0,
+                  427,
+                  0
+                ],
+                [
+                  0,
+                  116,
+                  0
+                ]
+              ]
+            }
+          },
+          "low_consensus": {
+            "support": 5,
+            "metrics": {
+              "n": 5,
+              "accuracy": 0.4,
+              "macro_precision": 0.13333333333333333,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.19047619047619047,
+              "weighted_f1": 0.22857142857142856,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 3
+                },
+                "offensive": {
+                  "precision": 0.4,
+                  "recall": 1.0,
+                  "f1": 0.5714285714285714,
+                  "support": 2
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "hard_negative_slices": {
+          "offensive_not_hate": {
+            "support": 1919,
+            "metrics": {
+              "n": 1919,
+              "accuracy": 1.0,
+              "macro_precision": 0.3333333333333333,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3333333333333333,
+              "weighted_f1": 1.0,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "f1": 1.0,
+                  "support": 1919
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1919,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_identity_mention": {
+            "support": 152,
+            "metrics": {
+              "n": 152,
+              "accuracy": 0.8092105263157895,
+              "macro_precision": 0.26973684210526316,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.29818181818181816,
+              "weighted_f1": 0.7238755980861244,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.8092105263157895,
+                  "recall": 1.0,
+                  "f1": 0.8945454545454545,
+                  "support": 123
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 29
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  123,
+                  0
+                ],
+                [
+                  0,
+                  29,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_profanity": {
+            "support": 149,
+            "metrics": {
+              "n": 149,
+              "accuracy": 0.9731543624161074,
+              "macro_precision": 0.3243847874720358,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3287981859410431,
+              "weighted_f1": 0.9599141670090855,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9731543624161074,
+                  "recall": 1.0,
+                  "f1": 0.9863945578231292,
+                  "support": 145
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 4
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  145,
+                  0
+                ],
+                [
+                  0,
+                  4,
+                  0
+                ]
+              ]
+            }
+          },
+          "short_non_hate": {
+            "support": 200,
+            "metrics": {
+              "n": 200,
+              "accuracy": 0.86,
+              "macro_precision": 0.2866666666666667,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3082437275985663,
+              "weighted_f1": 0.795268817204301,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.86,
+                  "recall": 1.0,
+                  "f1": 0.9247311827956989,
+                  "support": 172
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 28
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  172,
+                  0
+                ],
+                [
+                  0,
+                  28,
+                  0
+                ]
+              ]
+            }
+          },
+          "negated_or_counter_non_hate": {
+            "support": 27,
+            "metrics": {
+              "n": 27,
+              "accuracy": 0.7777777777777778,
+              "macro_precision": 0.25925925925925924,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.2916666666666667,
+              "weighted_f1": 0.6805555555555556,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.7777777777777778,
+                  "recall": 1.0,
+                  "f1": 0.875,
+                  "support": 21
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 6
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  21,
+                  0
+                ],
+                [
+                  0,
+                  6,
+                  0
+                ]
+              ]
+            }
+          },
+          "quoted_or_reported_non_hate": {
+            "support": 418,
+            "metrics": {
+              "n": 418,
+              "accuracy": 0.8516746411483254,
+              "macro_precision": 0.2838915470494418,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3066322136089578,
+              "weighted_f1": 0.7834526414697773,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.8516746411483254,
+                  "recall": 1.0,
+                  "f1": 0.9198966408268734,
+                  "support": 356
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 62
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  356,
+                  0
+                ],
+                [
+                  0,
+                  62,
+                  0
+                ]
+              ]
+            }
+          },
+          "obfuscated_non_hate": {
+            "support": 804,
+            "metrics": {
+              "n": 804,
+              "accuracy": 0.7848258706467661,
+              "macro_precision": 0.26160862354892206,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.2931475029036005,
+              "weighted_f1": 0.690209232582731,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.7848258706467661,
+                  "recall": 1.0,
+                  "f1": 0.8794425087108014,
+                  "support": 631
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 173
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  631,
+                  0
+                ],
+                [
+                  0,
+                  173,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "tfidf_word_char_logistic",
+      "seed": 42,
+      "evaluated_split": "validation",
+      "train_metrics": {
+        "n": 19826,
+        "accuracy": 0.974931907596086,
+        "macro_precision": 0.9191491444024459,
+        "macro_recall": 0.9884343019048595,
+        "macro_f1": 0.9506836308642254,
+        "weighted_f1": 0.9755224070688392,
+        "hate_speech_precision": 0.8299418604651163,
+        "hate_speech_recall": 0.9982517482517482,
+        "hate_speech_f1": 0.9063492063492063,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.8299418604651163,
+            "recall": 0.9982517482517482,
+            "f1": 0.9063492063492063,
+            "support": 1144
+          },
+          "offensive": {
+            "precision": 0.9997308934337998,
+            "recall": 0.9679520583637311,
+            "f1": 0.9835848557055864,
+            "support": 15352
+          },
+          "neither": {
+            "precision": 0.9277746793084216,
+            "recall": 0.9990990990990991,
+            "f1": 0.9621168305378832,
+            "support": 3330
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            1142,
+            1,
+            1
+          ],
+          [
+            234,
+            14860,
+            258
+          ],
+          [
+            0,
+            3,
+            3327
+          ]
+        ]
+      },
+      "metrics": {
+        "n": 2479,
+        "accuracy": 0.8878580072609923,
+        "macro_precision": 0.7129443015149993,
+        "macro_recall": 0.754856224270375,
+        "macro_f1": 0.7319888176579293,
+        "weighted_f1": 0.8904804540558754,
+        "hate_speech_precision": 0.36645962732919257,
+        "hate_speech_recall": 0.4125874125874126,
+        "hate_speech_f1": 0.3881578947368421,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.36645962732919257,
+            "recall": 0.4125874125874126,
+            "f1": 0.3881578947368421,
+            "support": 143
+          },
+          "offensive": {
+            "precision": 0.9505703422053232,
+            "recall": 0.9119332985930172,
+            "f1": 0.9308510638297872,
+            "support": 1919
+          },
+          "neither": {
+            "precision": 0.8218029350104822,
+            "recall": 0.9400479616306955,
+            "f1": 0.8769574944071589,
+            "support": 417
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            59,
+            68,
+            16
+          ],
+          [
+            100,
+            1750,
+            69
+          ],
+          [
+            2,
+            23,
+            392
+          ]
+        ]
+      },
+      "solver": "OneVsRestClassifier(LogisticRegression(liblinear))",
+      "iterations": [
+        7,
+        7,
+        8
+      ],
+      "validation_group_bootstrap": {
+        "macro_f1": {
+          "estimate": 0.7319888176579293,
+          "confidence": 0.95,
+          "lower": 0.7026904018753187,
+          "upper": 0.7564064765668054,
+          "bootstrap_mean": 0.7307186944693794,
+          "bootstrap_standard_error": 0.013612999229362998,
+          "resamples": 2000,
+          "seed": 42,
+          "groups": 2453
+        },
+        "hate_speech_recall": {
+          "estimate": 0.4125874125874126,
+          "confidence": 0.95,
+          "lower": 0.31543495095508517,
+          "upper": 0.5,
+          "bootstrap_mean": 0.4088630571857749,
+          "bootstrap_standard_error": 0.04694278602263373,
+          "resamples": 2000,
+          "seed": 42,
+          "groups": 2453
+        }
+      },
+      "slice_metrics": {
+        "ambiguity_slices": {
+          "unanimous": {
+            "support": 1755,
+            "metrics": {
+              "n": 1755,
+              "accuracy": 0.9481481481481482,
+              "macro_precision": 0.7163243144628368,
+              "macro_recall": 0.8699506002893145,
+              "macro_f1": 0.7606254027094295,
+              "weighted_f1": 0.9545878544575037,
+              "hate_speech_precision": 0.26666666666666666,
+              "hate_speech_recall": 0.6956521739130435,
+              "hate_speech_f1": 0.3855421686746988,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.26666666666666666,
+                  "recall": 0.6956521739130435,
+                  "f1": 0.3855421686746988,
+                  "support": 23
+                },
+                "offensive": {
+                  "precision": 0.9905865314989138,
+                  "recall": 0.9486823855755895,
+                  "f1": 0.9691817215727949,
+                  "support": 1442
+                },
+                "neither": {
+                  "precision": 0.89171974522293,
+                  "recall": 0.9655172413793104,
+                  "f1": 0.9271523178807947,
+                  "support": 290
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  16,
+                  4,
+                  3
+                ],
+                [
+                  43,
+                  1368,
+                  31
+                ],
+                [
+                  1,
+                  9,
+                  280
+                ]
+              ]
+            }
+          },
+          "disputed": {
+            "support": 724,
+            "metrics": {
+              "n": 724,
+              "accuracy": 0.7417127071823204,
+              "macro_precision": 0.6477646404277665,
+              "macro_recall": 0.6803538905121137,
+              "macro_f1": 0.658974086989353,
+              "weighted_f1": 0.7371878646028734,
+              "hate_speech_precision": 0.42574257425742573,
+              "hate_speech_recall": 0.35833333333333334,
+              "hate_speech_f1": 0.3891402714932127,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.42574257425742573,
+                  "recall": 0.35833333333333334,
+                  "f1": 0.3891402714932127,
+                  "support": 120
+                },
+                "offensive": {
+                  "precision": 0.8304347826086956,
+                  "recall": 0.80083857442348,
+                  "f1": 0.8153681963713981,
+                  "support": 477
+                },
+                "neither": {
+                  "precision": 0.6871165644171779,
+                  "recall": 0.8818897637795275,
+                  "f1": 0.7724137931034483,
+                  "support": 127
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  43,
+                  64,
+                  13
+                ],
+                [
+                  57,
+                  382,
+                  38
+                ],
+                [
+                  1,
+                  14,
+                  112
+                ]
+              ]
+            }
+          },
+          "one_vote_margin": {
+            "support": 660,
+            "metrics": {
+              "n": 660,
+              "accuracy": 0.7212121212121212,
+              "macro_precision": 0.6341267639741981,
+              "macro_recall": 0.6677728035839964,
+              "macro_f1": 0.6456599269051583,
+              "weighted_f1": 0.716189205901736,
+              "hate_speech_precision": 0.41836734693877553,
+              "hate_speech_recall": 0.3504273504273504,
+              "hate_speech_f1": 0.3813953488372093,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.41836734693877553,
+                  "recall": 0.3504273504273504,
+                  "f1": 0.3813953488372093,
+                  "support": 117
+                },
+                "offensive": {
+                  "precision": 0.8106796116504854,
+                  "recall": 0.7822014051522248,
+                  "f1": 0.7961859356376639,
+                  "support": 427
+                },
+                "neither": {
+                  "precision": 0.6733333333333333,
+                  "recall": 0.8706896551724138,
+                  "f1": 0.7593984962406015,
+                  "support": 116
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  41,
+                  64,
+                  12
+                ],
+                [
+                  56,
+                  334,
+                  37
+                ],
+                [
+                  1,
+                  14,
+                  101
+                ]
+              ]
+            }
+          },
+          "low_consensus": {
+            "support": 5,
+            "metrics": {
+              "n": 5,
+              "accuracy": 0.0,
+              "macro_precision": 0.0,
+              "macro_recall": 0.0,
+              "macro_f1": 0.0,
+              "weighted_f1": 0.0,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 3
+                },
+                "offensive": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 2
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "hard_negative_slices": {
+          "offensive_not_hate": {
+            "support": 1919,
+            "metrics": {
+              "n": 1919,
+              "accuracy": 0.9119332985930172,
+              "macro_precision": 0.3333333333333333,
+              "macro_recall": 0.3039777661976724,
+              "macro_f1": 0.3179794676115199,
+              "weighted_f1": 0.9539384028345598,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 0.9119332985930172,
+                  "f1": 0.9539384028345598,
+                  "support": 1919
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  100,
+                  1750,
+                  69
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_identity_mention": {
+            "support": 152,
+            "metrics": {
+              "n": 152,
+              "accuracy": 0.8421052631578947,
+              "macro_precision": 0.62151841868823,
+              "macro_recall": 0.5664891131669937,
+              "macro_f1": 0.5922521004111443,
+              "weighted_f1": 0.8952952940844412,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9716981132075472,
+                  "recall": 0.8373983739837398,
+                  "f1": 0.8995633187772926,
+                  "support": 123
+                },
+                "neither": {
+                  "precision": 0.8928571428571429,
+                  "recall": 0.8620689655172413,
+                  "f1": 0.8771929824561403,
+                  "support": 29
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  17,
+                  103,
+                  3
+                ],
+                [
+                  1,
+                  3,
+                  25
+                ]
+              ]
+            }
+          },
+          "non_hate_profanity": {
+            "support": 149,
+            "metrics": {
+              "n": 149,
+              "accuracy": 0.9530201342281879,
+              "macro_precision": 0.6,
+              "macro_recall": 0.6505747126436782,
+              "macro_f1": 0.6213846355189111,
+              "weighted_f1": 0.972946195418745,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 0.9517241379310345,
+                  "f1": 0.9752650176678446,
+                  "support": 145
+                },
+                "neither": {
+                  "precision": 0.8,
+                  "recall": 1.0,
+                  "f1": 0.8888888888888888,
+                  "support": 4
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  6,
+                  138,
+                  1
+                ],
+                [
+                  0,
+                  0,
+                  4
+                ]
+              ]
+            }
+          },
+          "short_non_hate": {
+            "support": 200,
+            "metrics": {
+              "n": 200,
+              "accuracy": 0.885,
+              "macro_precision": 0.6299909255898367,
+              "macro_recall": 0.6021594684385382,
+              "macro_f1": 0.6147931557288282,
+              "weighted_f1": 0.929324236517219,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.993421052631579,
+                  "recall": 0.877906976744186,
+                  "f1": 0.9320987654320988,
+                  "support": 172
+                },
+                "neither": {
+                  "precision": 0.896551724137931,
+                  "recall": 0.9285714285714286,
+                  "f1": 0.9122807017543859,
+                  "support": 28
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  18,
+                  151,
+                  3
+                ],
+                [
+                  1,
+                  1,
+                  26
+                ]
+              ]
+            }
+          },
+          "negated_or_counter_non_hate": {
+            "support": 27,
+            "metrics": {
+              "n": 27,
+              "accuracy": 0.8518518518518519,
+              "macro_precision": 0.5935672514619883,
+              "macro_recall": 0.5634920634920635,
+              "macro_f1": 0.5777777777777778,
+              "weighted_f1": 0.8851851851851853,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9473684210526315,
+                  "recall": 0.8571428571428571,
+                  "f1": 0.9,
+                  "support": 21
+                },
+                "neither": {
+                  "precision": 0.8333333333333334,
+                  "recall": 0.8333333333333334,
+                  "f1": 0.8333333333333334,
+                  "support": 6
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  18,
+                  1
+                ],
+                [
+                  0,
+                  1,
+                  5
+                ]
+              ]
+            }
+          },
+          "quoted_or_reported_non_hate": {
+            "support": 418,
+            "metrics": {
+              "n": 418,
+              "accuracy": 0.9234449760765551,
+              "macro_precision": 0.5925252525252526,
+              "macro_recall": 0.6233840763561677,
+              "macro_f1": 0.6048888794308129,
+              "weighted_f1": 0.9397010666503481,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.990909090909091,
+                  "recall": 0.9185393258426966,
+                  "f1": 0.9533527696793003,
+                  "support": 356
+                },
+                "neither": {
+                  "precision": 0.7866666666666666,
+                  "recall": 0.9516129032258065,
+                  "f1": 0.8613138686131386,
+                  "support": 62
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  13,
+                  327,
+                  16
+                ],
+                [
+                  0,
+                  3,
+                  59
+                ]
+              ]
+            }
+          },
+          "obfuscated_non_hate": {
+            "support": 804,
+            "metrics": {
+              "n": 804,
+              "accuracy": 0.9054726368159204,
+              "macro_precision": 0.6115334737242865,
+              "macro_recall": 0.6181276317677846,
+              "macro_f1": 0.6125376333916552,
+              "weighted_f1": 0.9293660321836225,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.991166077738516,
+                  "recall": 0.8890649762282092,
+                  "f1": 0.9373433583959899,
+                  "support": 631
+                },
+                "neither": {
+                  "precision": 0.8434343434343434,
+                  "recall": 0.9653179190751445,
+                  "f1": 0.9002695417789758,
+                  "support": 173
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  39,
+                  561,
+                  31
+                ],
+                [
+                  1,
+                  5,
+                  167
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "majority",
+      "seed": 73,
+      "evaluated_split": "validation",
+      "train_metrics": {
+        "n": 19826,
+        "accuracy": 0.7743367295470595,
+        "macro_precision": 0.25811224318235315,
+        "macro_recall": 0.3333333333333333,
+        "macro_f1": 0.2909394128906324,
+        "weighted_f1": 0.6758552204222217,
+        "hate_speech_precision": 0.0,
+        "hate_speech_recall": 0.0,
+        "hate_speech_f1": 0.0,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 1144
+          },
+          "offensive": {
+            "precision": 0.7743367295470595,
+            "recall": 1.0,
+            "f1": 0.8728182386718972,
+            "support": 15352
+          },
+          "neither": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 3330
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            0,
+            1144,
+            0
+          ],
+          [
+            0,
+            15352,
+            0
+          ],
+          [
+            0,
+            3330,
+            0
+          ]
+        ]
+      },
+      "metrics": {
+        "n": 2479,
+        "accuracy": 0.7741024606696248,
+        "macro_precision": 0.25803415355654163,
+        "macro_recall": 0.3333333333333333,
+        "macro_f1": 0.290889798393209,
+        "weighted_f1": 0.6755355261596225,
+        "hate_speech_precision": 0.0,
+        "hate_speech_recall": 0.0,
+        "hate_speech_f1": 0.0,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 143
+          },
+          "offensive": {
+            "precision": 0.7741024606696248,
+            "recall": 1.0,
+            "f1": 0.872669395179627,
+            "support": 1919
+          },
+          "neither": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 417
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            0,
+            143,
+            0
+          ],
+          [
+            0,
+            1919,
+            0
+          ],
+          [
+            0,
+            417,
+            0
+          ]
+        ]
+      },
+      "validation_group_bootstrap": {
+        "macro_f1": {
+          "estimate": 0.290889798393209,
+          "confidence": 0.95,
+          "lower": 0.2872335567861653,
+          "upper": 0.2943803476492842,
+          "bootstrap_mean": 0.29087434335339324,
+          "bootstrap_standard_error": 0.001826499393617279,
+          "resamples": 2000,
+          "seed": 73,
+          "groups": 2453
+        },
+        "hate_speech_recall": {
+          "estimate": 0.0,
+          "confidence": 0.95,
+          "lower": 0.0,
+          "upper": 0.0,
+          "bootstrap_mean": 0.0,
+          "bootstrap_standard_error": 0.0,
+          "resamples": 2000,
+          "seed": 73,
+          "groups": 2453
+        }
+      },
+      "slice_metrics": {
+        "ambiguity_slices": {
+          "unanimous": {
+            "support": 1755,
+            "metrics": {
+              "n": 1755,
+              "accuracy": 0.8216524216524217,
+              "macro_precision": 0.27388414055080723,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3006985715775206,
+              "weighted_f1": 0.7412091285722815,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 23
+                },
+                "offensive": {
+                  "precision": 0.8216524216524217,
+                  "recall": 1.0,
+                  "f1": 0.9020957147325618,
+                  "support": 1442
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 290
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  23,
+                  0
+                ],
+                [
+                  0,
+                  1442,
+                  0
+                ],
+                [
+                  0,
+                  290,
+                  0
+                ]
+              ]
+            }
+          },
+          "disputed": {
+            "support": 724,
+            "metrics": {
+              "n": 724,
+              "accuracy": 0.6588397790055248,
+              "macro_precision": 0.21961325966850828,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.26477935054121565,
+              "weighted_f1": 0.5233415063874028,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 120
+                },
+                "offensive": {
+                  "precision": 0.6588397790055248,
+                  "recall": 1.0,
+                  "f1": 0.794338051623647,
+                  "support": 477
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 127
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  120,
+                  0
+                ],
+                [
+                  0,
+                  477,
+                  0
+                ],
+                [
+                  0,
+                  127,
+                  0
+                ]
+              ]
+            }
+          },
+          "one_vote_margin": {
+            "support": 660,
+            "metrics": {
+              "n": 660,
+              "accuracy": 0.646969696969697,
+              "macro_precision": 0.21565656565656566,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.26188285801901257,
+              "weighted_f1": 0.5082908198823561,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 117
+                },
+                "offensive": {
+                  "precision": 0.646969696969697,
+                  "recall": 1.0,
+                  "f1": 0.7856485740570377,
+                  "support": 427
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 116
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  117,
+                  0
+                ],
+                [
+                  0,
+                  427,
+                  0
+                ],
+                [
+                  0,
+                  116,
+                  0
+                ]
+              ]
+            }
+          },
+          "low_consensus": {
+            "support": 5,
+            "metrics": {
+              "n": 5,
+              "accuracy": 0.4,
+              "macro_precision": 0.13333333333333333,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.19047619047619047,
+              "weighted_f1": 0.22857142857142856,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 3
+                },
+                "offensive": {
+                  "precision": 0.4,
+                  "recall": 1.0,
+                  "f1": 0.5714285714285714,
+                  "support": 2
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  3,
+                  0
+                ],
+                [
+                  0,
+                  2,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "hard_negative_slices": {
+          "offensive_not_hate": {
+            "support": 1919,
+            "metrics": {
+              "n": 1919,
+              "accuracy": 1.0,
+              "macro_precision": 0.3333333333333333,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3333333333333333,
+              "weighted_f1": 1.0,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 1.0,
+                  "f1": 1.0,
+                  "support": 1919
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  1919,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_identity_mention": {
+            "support": 152,
+            "metrics": {
+              "n": 152,
+              "accuracy": 0.8092105263157895,
+              "macro_precision": 0.26973684210526316,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.29818181818181816,
+              "weighted_f1": 0.7238755980861244,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.8092105263157895,
+                  "recall": 1.0,
+                  "f1": 0.8945454545454545,
+                  "support": 123
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 29
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  123,
+                  0
+                ],
+                [
+                  0,
+                  29,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_profanity": {
+            "support": 149,
+            "metrics": {
+              "n": 149,
+              "accuracy": 0.9731543624161074,
+              "macro_precision": 0.3243847874720358,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3287981859410431,
+              "weighted_f1": 0.9599141670090855,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9731543624161074,
+                  "recall": 1.0,
+                  "f1": 0.9863945578231292,
+                  "support": 145
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 4
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  145,
+                  0
+                ],
+                [
+                  0,
+                  4,
+                  0
+                ]
+              ]
+            }
+          },
+          "short_non_hate": {
+            "support": 200,
+            "metrics": {
+              "n": 200,
+              "accuracy": 0.86,
+              "macro_precision": 0.2866666666666667,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3082437275985663,
+              "weighted_f1": 0.795268817204301,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.86,
+                  "recall": 1.0,
+                  "f1": 0.9247311827956989,
+                  "support": 172
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 28
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  172,
+                  0
+                ],
+                [
+                  0,
+                  28,
+                  0
+                ]
+              ]
+            }
+          },
+          "negated_or_counter_non_hate": {
+            "support": 27,
+            "metrics": {
+              "n": 27,
+              "accuracy": 0.7777777777777778,
+              "macro_precision": 0.25925925925925924,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.2916666666666667,
+              "weighted_f1": 0.6805555555555556,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.7777777777777778,
+                  "recall": 1.0,
+                  "f1": 0.875,
+                  "support": 21
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 6
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  21,
+                  0
+                ],
+                [
+                  0,
+                  6,
+                  0
+                ]
+              ]
+            }
+          },
+          "quoted_or_reported_non_hate": {
+            "support": 418,
+            "metrics": {
+              "n": 418,
+              "accuracy": 0.8516746411483254,
+              "macro_precision": 0.2838915470494418,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.3066322136089578,
+              "weighted_f1": 0.7834526414697773,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.8516746411483254,
+                  "recall": 1.0,
+                  "f1": 0.9198966408268734,
+                  "support": 356
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 62
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  356,
+                  0
+                ],
+                [
+                  0,
+                  62,
+                  0
+                ]
+              ]
+            }
+          },
+          "obfuscated_non_hate": {
+            "support": 804,
+            "metrics": {
+              "n": 804,
+              "accuracy": 0.7848258706467661,
+              "macro_precision": 0.26160862354892206,
+              "macro_recall": 0.3333333333333333,
+              "macro_f1": 0.2931475029036005,
+              "weighted_f1": 0.690209232582731,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.7848258706467661,
+                  "recall": 1.0,
+                  "f1": 0.8794425087108014,
+                  "support": 631
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 173
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  631,
+                  0
+                ],
+                [
+                  0,
+                  173,
+                  0
+                ]
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "candidate_id": "tfidf_word_char_logistic",
+      "seed": 73,
+      "evaluated_split": "validation",
+      "train_metrics": {
+        "n": 19826,
+        "accuracy": 0.974931907596086,
+        "macro_precision": 0.9191491444024459,
+        "macro_recall": 0.9884343019048595,
+        "macro_f1": 0.9506836308642254,
+        "weighted_f1": 0.9755224070688392,
+        "hate_speech_precision": 0.8299418604651163,
+        "hate_speech_recall": 0.9982517482517482,
+        "hate_speech_f1": 0.9063492063492063,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.8299418604651163,
+            "recall": 0.9982517482517482,
+            "f1": 0.9063492063492063,
+            "support": 1144
+          },
+          "offensive": {
+            "precision": 0.9997308934337998,
+            "recall": 0.9679520583637311,
+            "f1": 0.9835848557055864,
+            "support": 15352
+          },
+          "neither": {
+            "precision": 0.9277746793084216,
+            "recall": 0.9990990990990991,
+            "f1": 0.9621168305378832,
+            "support": 3330
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            1142,
+            1,
+            1
+          ],
+          [
+            234,
+            14860,
+            258
+          ],
+          [
+            0,
+            3,
+            3327
+          ]
+        ]
+      },
+      "metrics": {
+        "n": 2479,
+        "accuracy": 0.8878580072609923,
+        "macro_precision": 0.7129443015149993,
+        "macro_recall": 0.754856224270375,
+        "macro_f1": 0.7319888176579293,
+        "weighted_f1": 0.8904804540558754,
+        "hate_speech_precision": 0.36645962732919257,
+        "hate_speech_recall": 0.4125874125874126,
+        "hate_speech_f1": 0.3881578947368421,
+        "per_class": {
+          "hate_speech": {
+            "precision": 0.36645962732919257,
+            "recall": 0.4125874125874126,
+            "f1": 0.3881578947368421,
+            "support": 143
+          },
+          "offensive": {
+            "precision": 0.9505703422053232,
+            "recall": 0.9119332985930172,
+            "f1": 0.9308510638297872,
+            "support": 1919
+          },
+          "neither": {
+            "precision": 0.8218029350104822,
+            "recall": 0.9400479616306955,
+            "f1": 0.8769574944071589,
+            "support": 417
+          }
+        },
+        "confusion_matrix_rows_true_columns_predicted": [
+          [
+            59,
+            68,
+            16
+          ],
+          [
+            100,
+            1750,
+            69
+          ],
+          [
+            2,
+            23,
+            392
+          ]
+        ]
+      },
+      "solver": "OneVsRestClassifier(LogisticRegression(liblinear))",
+      "iterations": [
+        7,
+        7,
+        8
+      ],
+      "validation_group_bootstrap": {
+        "macro_f1": {
+          "estimate": 0.7319888176579293,
+          "confidence": 0.95,
+          "lower": 0.7023988174102416,
+          "upper": 0.7578802994820578,
+          "bootstrap_mean": 0.731405475149116,
+          "bootstrap_standard_error": 0.013894412864998942,
+          "resamples": 2000,
+          "seed": 73,
+          "groups": 2453
+        },
+        "hate_speech_recall": {
+          "estimate": 0.4125874125874126,
+          "confidence": 0.95,
+          "lower": 0.3184947447447448,
+          "upper": 0.5100671140939598,
+          "bootstrap_mean": 0.4107801571575859,
+          "bootstrap_standard_error": 0.048682039118461036,
+          "resamples": 2000,
+          "seed": 73,
+          "groups": 2453
+        }
+      },
+      "slice_metrics": {
+        "ambiguity_slices": {
+          "unanimous": {
+            "support": 1755,
+            "metrics": {
+              "n": 1755,
+              "accuracy": 0.9481481481481482,
+              "macro_precision": 0.7163243144628368,
+              "macro_recall": 0.8699506002893145,
+              "macro_f1": 0.7606254027094295,
+              "weighted_f1": 0.9545878544575037,
+              "hate_speech_precision": 0.26666666666666666,
+              "hate_speech_recall": 0.6956521739130435,
+              "hate_speech_f1": 0.3855421686746988,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.26666666666666666,
+                  "recall": 0.6956521739130435,
+                  "f1": 0.3855421686746988,
+                  "support": 23
+                },
+                "offensive": {
+                  "precision": 0.9905865314989138,
+                  "recall": 0.9486823855755895,
+                  "f1": 0.9691817215727949,
+                  "support": 1442
+                },
+                "neither": {
+                  "precision": 0.89171974522293,
+                  "recall": 0.9655172413793104,
+                  "f1": 0.9271523178807947,
+                  "support": 290
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  16,
+                  4,
+                  3
+                ],
+                [
+                  43,
+                  1368,
+                  31
+                ],
+                [
+                  1,
+                  9,
+                  280
+                ]
+              ]
+            }
+          },
+          "disputed": {
+            "support": 724,
+            "metrics": {
+              "n": 724,
+              "accuracy": 0.7417127071823204,
+              "macro_precision": 0.6477646404277665,
+              "macro_recall": 0.6803538905121137,
+              "macro_f1": 0.658974086989353,
+              "weighted_f1": 0.7371878646028734,
+              "hate_speech_precision": 0.42574257425742573,
+              "hate_speech_recall": 0.35833333333333334,
+              "hate_speech_f1": 0.3891402714932127,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.42574257425742573,
+                  "recall": 0.35833333333333334,
+                  "f1": 0.3891402714932127,
+                  "support": 120
+                },
+                "offensive": {
+                  "precision": 0.8304347826086956,
+                  "recall": 0.80083857442348,
+                  "f1": 0.8153681963713981,
+                  "support": 477
+                },
+                "neither": {
+                  "precision": 0.6871165644171779,
+                  "recall": 0.8818897637795275,
+                  "f1": 0.7724137931034483,
+                  "support": 127
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  43,
+                  64,
+                  13
+                ],
+                [
+                  57,
+                  382,
+                  38
+                ],
+                [
+                  1,
+                  14,
+                  112
+                ]
+              ]
+            }
+          },
+          "one_vote_margin": {
+            "support": 660,
+            "metrics": {
+              "n": 660,
+              "accuracy": 0.7212121212121212,
+              "macro_precision": 0.6341267639741981,
+              "macro_recall": 0.6677728035839964,
+              "macro_f1": 0.6456599269051583,
+              "weighted_f1": 0.716189205901736,
+              "hate_speech_precision": 0.41836734693877553,
+              "hate_speech_recall": 0.3504273504273504,
+              "hate_speech_f1": 0.3813953488372093,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.41836734693877553,
+                  "recall": 0.3504273504273504,
+                  "f1": 0.3813953488372093,
+                  "support": 117
+                },
+                "offensive": {
+                  "precision": 0.8106796116504854,
+                  "recall": 0.7822014051522248,
+                  "f1": 0.7961859356376639,
+                  "support": 427
+                },
+                "neither": {
+                  "precision": 0.6733333333333333,
+                  "recall": 0.8706896551724138,
+                  "f1": 0.7593984962406015,
+                  "support": 116
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  41,
+                  64,
+                  12
+                ],
+                [
+                  56,
+                  334,
+                  37
+                ],
+                [
+                  1,
+                  14,
+                  101
+                ]
+              ]
+            }
+          },
+          "low_consensus": {
+            "support": 5,
+            "metrics": {
+              "n": 5,
+              "accuracy": 0.0,
+              "macro_precision": 0.0,
+              "macro_recall": 0.0,
+              "macro_f1": 0.0,
+              "weighted_f1": 0.0,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 3
+                },
+                "offensive": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 2
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  3,
+                  0
+                ],
+                [
+                  2,
+                  0,
+                  0
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          }
+        },
+        "hard_negative_slices": {
+          "offensive_not_hate": {
+            "support": 1919,
+            "metrics": {
+              "n": 1919,
+              "accuracy": 0.9119332985930172,
+              "macro_precision": 0.3333333333333333,
+              "macro_recall": 0.3039777661976724,
+              "macro_f1": 0.3179794676115199,
+              "weighted_f1": 0.9539384028345598,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 0.9119332985930172,
+                  "f1": 0.9539384028345598,
+                  "support": 1919
+                },
+                "neither": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  100,
+                  1750,
+                  69
+                ],
+                [
+                  0,
+                  0,
+                  0
+                ]
+              ]
+            }
+          },
+          "non_hate_identity_mention": {
+            "support": 152,
+            "metrics": {
+              "n": 152,
+              "accuracy": 0.8421052631578947,
+              "macro_precision": 0.62151841868823,
+              "macro_recall": 0.5664891131669937,
+              "macro_f1": 0.5922521004111443,
+              "weighted_f1": 0.8952952940844412,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9716981132075472,
+                  "recall": 0.8373983739837398,
+                  "f1": 0.8995633187772926,
+                  "support": 123
+                },
+                "neither": {
+                  "precision": 0.8928571428571429,
+                  "recall": 0.8620689655172413,
+                  "f1": 0.8771929824561403,
+                  "support": 29
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  17,
+                  103,
+                  3
+                ],
+                [
+                  1,
+                  3,
+                  25
+                ]
+              ]
+            }
+          },
+          "non_hate_profanity": {
+            "support": 149,
+            "metrics": {
+              "n": 149,
+              "accuracy": 0.9530201342281879,
+              "macro_precision": 0.6,
+              "macro_recall": 0.6505747126436782,
+              "macro_f1": 0.6213846355189111,
+              "weighted_f1": 0.972946195418745,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 1.0,
+                  "recall": 0.9517241379310345,
+                  "f1": 0.9752650176678446,
+                  "support": 145
+                },
+                "neither": {
+                  "precision": 0.8,
+                  "recall": 1.0,
+                  "f1": 0.8888888888888888,
+                  "support": 4
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  6,
+                  138,
+                  1
+                ],
+                [
+                  0,
+                  0,
+                  4
+                ]
+              ]
+            }
+          },
+          "short_non_hate": {
+            "support": 200,
+            "metrics": {
+              "n": 200,
+              "accuracy": 0.885,
+              "macro_precision": 0.6299909255898367,
+              "macro_recall": 0.6021594684385382,
+              "macro_f1": 0.6147931557288282,
+              "weighted_f1": 0.929324236517219,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.993421052631579,
+                  "recall": 0.877906976744186,
+                  "f1": 0.9320987654320988,
+                  "support": 172
+                },
+                "neither": {
+                  "precision": 0.896551724137931,
+                  "recall": 0.9285714285714286,
+                  "f1": 0.9122807017543859,
+                  "support": 28
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  18,
+                  151,
+                  3
+                ],
+                [
+                  1,
+                  1,
+                  26
+                ]
+              ]
+            }
+          },
+          "negated_or_counter_non_hate": {
+            "support": 27,
+            "metrics": {
+              "n": 27,
+              "accuracy": 0.8518518518518519,
+              "macro_precision": 0.5935672514619883,
+              "macro_recall": 0.5634920634920635,
+              "macro_f1": 0.5777777777777778,
+              "weighted_f1": 0.8851851851851853,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.9473684210526315,
+                  "recall": 0.8571428571428571,
+                  "f1": 0.9,
+                  "support": 21
+                },
+                "neither": {
+                  "precision": 0.8333333333333334,
+                  "recall": 0.8333333333333334,
+                  "f1": 0.8333333333333334,
+                  "support": 6
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  2,
+                  18,
+                  1
+                ],
+                [
+                  0,
+                  1,
+                  5
+                ]
+              ]
+            }
+          },
+          "quoted_or_reported_non_hate": {
+            "support": 418,
+            "metrics": {
+              "n": 418,
+              "accuracy": 0.9234449760765551,
+              "macro_precision": 0.5925252525252526,
+              "macro_recall": 0.6233840763561677,
+              "macro_f1": 0.6048888794308129,
+              "weighted_f1": 0.9397010666503481,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.990909090909091,
+                  "recall": 0.9185393258426966,
+                  "f1": 0.9533527696793003,
+                  "support": 356
+                },
+                "neither": {
+                  "precision": 0.7866666666666666,
+                  "recall": 0.9516129032258065,
+                  "f1": 0.8613138686131386,
+                  "support": 62
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  13,
+                  327,
+                  16
+                ],
+                [
+                  0,
+                  3,
+                  59
+                ]
+              ]
+            }
+          },
+          "obfuscated_non_hate": {
+            "support": 804,
+            "metrics": {
+              "n": 804,
+              "accuracy": 0.9054726368159204,
+              "macro_precision": 0.6115334737242865,
+              "macro_recall": 0.6181276317677846,
+              "macro_f1": 0.6125376333916552,
+              "weighted_f1": 0.9293660321836225,
+              "hate_speech_precision": 0.0,
+              "hate_speech_recall": 0.0,
+              "hate_speech_f1": 0.0,
+              "per_class": {
+                "hate_speech": {
+                  "precision": 0.0,
+                  "recall": 0.0,
+                  "f1": 0.0,
+                  "support": 0
+                },
+                "offensive": {
+                  "precision": 0.991166077738516,
+                  "recall": 0.8890649762282092,
+                  "f1": 0.9373433583959899,
+                  "support": 631
+                },
+                "neither": {
+                  "precision": 0.8434343434343434,
+                  "recall": 0.9653179190751445,
+                  "f1": 0.9002695417789758,
+                  "support": 173
+                }
+              },
+              "confusion_matrix_rows_true_columns_predicted": [
+                [
+                  0,
+                  0,
+                  0
+                ],
+                [
+                  39,
+                  561,
+                  31
+                ],
+                [
+                  1,
+                  5,
+                  167
+                ]
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "aggregates": {
+    "majority": {
+      "seeds": [
+        13,
+        42,
+        73
+      ],
+      "validation_macro_f1_mean": 0.290889798393209,
+      "validation_macro_f1_std": 0.0,
+      "validation_hate_recall_mean": 0.0,
+      "validation_hate_precision_mean": 0.0,
+      "seed_variance": {
+        "macro_f1": {
+          "mean": 0.290889798393209,
+          "sample_std": 0.0,
+          "minimum": 0.290889798393209,
+          "maximum": 0.290889798393209
+        },
+        "hate_speech_precision": {
+          "mean": 0.0,
+          "sample_std": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "hate_speech_recall": {
+          "mean": 0.0,
+          "sample_std": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        },
+        "hate_speech_f1": {
+          "mean": 0.0,
+          "sample_std": 0.0,
+          "minimum": 0.0,
+          "maximum": 0.0
+        }
+      }
+    },
+    "tfidf_word_char_logistic": {
+      "seeds": [
+        13,
+        42,
+        73
+      ],
+      "validation_macro_f1_mean": 0.7319888176579293,
+      "validation_macro_f1_std": 0.0,
+      "validation_hate_recall_mean": 0.41258741258741266,
+      "validation_hate_precision_mean": 0.3664596273291926,
+      "seed_variance": {
+        "macro_f1": {
+          "mean": 0.7319888176579293,
+          "sample_std": 0.0,
+          "minimum": 0.7319888176579293,
+          "maximum": 0.7319888176579293
+        },
+        "hate_speech_precision": {
+          "mean": 0.3664596273291926,
+          "sample_std": 6.798699777552591e-17,
+          "minimum": 0.36645962732919257,
+          "maximum": 0.36645962732919257
+        },
+        "hate_speech_recall": {
+          "mean": 0.41258741258741266,
+          "sample_std": 6.798699777552591e-17,
+          "minimum": 0.4125874125874126,
+          "maximum": 0.4125874125874126
+        },
+        "hate_speech_f1": {
+          "mean": 0.3881578947368421,
+          "sample_std": 0.0,
+          "minimum": 0.3881578947368421,
+          "maximum": 0.3881578947368421
+        }
+      }
+    }
+  },
+  "integrity": {
+    "payload_sha256": "bfa0968638fdf1ffa40ec7164a06f131e12c4839bdc46c10912beac2af69d277"
+  }
+}

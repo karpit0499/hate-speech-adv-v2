@@ -1,0 +1,26 @@
+{
+  "protocol_id": "grouped_v1",
+  "dataset": {
+    "repository": "tdavidson/hate_speech_offensive",
+    "revision": "adc5fb774614827695774f2dbe0ea8122f6a92b4",
+    "split": "train",
+    "expected_rows": 24783
+  },
+  "grouping": {
+    "version": "template_v1",
+    "description": "NFKC + HTML unescape + casefold + URL/handle placeholders + leading RT removal + whitespace collapse"
+  },
+  "partition": {
+    "algorithm": "two_stage_stratified_group_kfold_secret_v1",
+    "secret_source": "GROUPED_V1_SPLIT_SECRET (64 lowercase hexadecimal characters; never committed)",
+    "test_folds": 10,
+    "validation_folds_within_remainder": 9,
+    "split_codes": {"train": 0, "validation": 1, "test": 2}
+  },
+  "policy": {
+    "tuning_splits": ["train", "validation"],
+    "frozen_split": "test",
+    "test_access": "requires a committed full-matrix selection receipt, the split secret, and a new one-shot ledger",
+    "legacy_artifacts_eligible": false
+  }
+}

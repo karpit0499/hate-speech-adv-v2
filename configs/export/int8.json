@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "format": "onnx",
+  "opset": 17,
+  "max_length": 256,
+  "quantization": {
+    "method": "dynamic_int8",
+    "target": "avx2",
+    "per_channel": false
+  },
+  "quality_gate": {
+    "evaluated_split": "validation",
+    "maximum_macro_f1_drop": 0.01,
+    "maximum_hate_recall_drop": 0.02,
+    "maximum_prediction_disagreement_rate": 0.02,
+    "slice_quality_gate": {
+      "minimum_support": 25,
+      "maximum_macro_f1_drop": 0.03,
+      "maximum_accuracy_drop": 0.03
+    }
+  },
+  "frozen_test_policy": "locked until protocol commit and selection receipt"
+}

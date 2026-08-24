@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "protocol_id": "grouped_v1",
+  "manifest_path": "evaluation/manifests/grouped_v1.json",
+  "result_path": "evaluation/results/grouped_v1_frozen_test.json",
+  "reveal_path": "evaluation/reveals/grouped_v1_reveal.json",
+  "selection_receipt_path": "evaluation/selection/grouped_v1_selection.json",
+  "export_manifest_path": "evaluation/results/grouped_v1_export_manifest.json",
+  "quality_gate_path": "evaluation/results/grouped_v1_q8_gate.json",
+  "export_config_path": "configs/export/int8.json",
+  "slices_path": "configs/evaluation/slices_v1.json",
+  "allowed_states": [
+    "pre_test_sealed",
+    "post_test_unrevealed",
+    "post_test_revealed"
+  ]
+}
