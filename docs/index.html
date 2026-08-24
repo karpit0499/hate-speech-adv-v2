@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="referrer" content="no-referrer" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' blob: 'unsafe-inline' 'wasm-unsafe-eval' https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://*.hf.co https://*.xethub.hf.co; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'" />
 <title>hate-speech-adv v2 — live classifier demo</title>
 <style>
   :root {
@@ -57,6 +59,9 @@
   code { background: #0c0f13; padding: 1px 5px; border-radius: 5px; }
   a { color: var(--accent); }
   .note { font-size: 12.5px; color: var(--muted); }
+  pre { max-height: 360px; overflow: auto; white-space: pre-wrap; word-break: break-word;
+        background: #0c0f13; border: 1px solid var(--line); border-radius: 8px;
+        padding: 10px; font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; }
 </style>
 </head>
 <body>
@@ -86,16 +91,26 @@
       </div>
     </div>
 
-    <details>
-      <summary>Optional: add a one-sentence LLM rationale (your own Groq key, stays in your browser)</summary>
-      <p class="note">
-        The rationale is cosmetic. The encoder above already fixed the label; the LLM only
-        writes prose about a decision it <b>cannot change</b>. Your key is used only for a
-        direct browser call to Groq and is never stored or sent anywhere else. Leave blank to
-        keep the plain template rationale.
-      </p>
-      <input id="groqkey" type="password" placeholder="gsk_… (optional)" autocomplete="off" />
-    </details>
+    <p class="note">
+      The explanation is a fixed local template derived from the classifier output. The demo
+      never asks for an API key and never sends the input text to a rationale service.
+    </p>
+  </div>
+
+  <!-- ============ BROWSER RUNTIME ============ -->
+  <div class="panel">
+    <h2 style="margin-top:0">Browser runtime benchmark</h2>
+    <p class="note">
+      Measures the pinned q8 model in this browser using the WASM backend. It records the
+      first pipeline initialization separately from warm inference at four representative
+      input lengths. Browser caches are <b>not cleared</b>, so the report states the observed
+      cache condition instead of presenting it as a guaranteed network-cold download.
+    </p>
+    <div class="row">
+      <button id="runbench">Run runtime benchmark</button>
+      <span id="benchstatus" class="status"></span>
+    </div>
+    <pre id="benchout" hidden></pre>
   </div>
 
   <!-- ============ EVALUATE ============ -->
@@ -103,8 +118,9 @@
     <h2 style="margin-top:0">Evaluation (baked in)</h2>
     <p class="note">
       Runs a small <b>curated, labelled sample</b> (<code>eval_set.json</code>) through the
-      in-browser model and scores it live. This is illustrative — the authoritative numbers
-      in the README come from the held-out split of the full dataset. The point here is that
+      pinned historical in-browser model and scores it live. This is illustrative only and
+      is not protocol evidence. The README reports the current validation-only evidence;
+      the grouped frozen test remains sealed. The point here is that
       you can <i>watch</i> the model be measured, per class, with no setup.
     </p>
     <div class="row">
@@ -140,25 +156,39 @@ import { pipeline, env } from "https://cdn.jsdelivr.net/npm/@huggingface/transfo
 
 // ---- CONFIG: replace with your ONNX repo from Phase 13 ----
 const MODEL_ID = "kmrarpit2704/hs-roberta-v2-onnx";
+const MODEL_REVISION = "7c7c7c63c53f0e8373e5171c85c7e4a1a9a7e267";
+const TRANSFORMERS_JS_VERSION = "4.2.0";
 const LABELS = ["hate_speech", "offensive", "neither"];
 
 env.allowLocalModels = false;   // always fetch from the Hub
 
 let classifier = null;
+let firstPipelineInitMs = null;
+const modelFileProgress = new Map();
 const $ = (id) => document.getElementById(id);
 
 async function getClassifier() {
   if (classifier) return classifier;
+  const started = performance.now();
   $("status").textContent = "Downloading model (first time only)…";
   classifier = await pipeline("text-classification", MODEL_ID, {
     dtype: "q8",   // the quantized model.onnx you pushed in Phase 13
+    device: "wasm",
+    revision: MODEL_REVISION,
     progress_callback: (p) => {
+      if (p.file && p.total) {
+        modelFileProgress.set(p.file, {
+          loaded: Number(p.loaded || p.total),
+          total: Number(p.total),
+        });
+      }
       if (p.status === "progress" && p.total) {
         const pct = Math.round((p.loaded / p.total) * 100);
         $("status").textContent = `Downloading ${p.file}: ${pct}%`;
       }
     },
   });
+  firstPipelineInitMs = performance.now() - started;
   $("status").textContent = "Model ready.";
   return classifier;
 }
@@ -177,23 +207,134 @@ function argmax(m) {
   return LABELS.reduce((a, b) => (m[b] > m[a] ? b : a), LABELS[0]);
 }
 
-async function llmRationale(text, label, key) {
-  // Optional, user-supplied key. The label is already fixed; the LLM cannot change it.
-  const r = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-    method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
-    body: JSON.stringify({
-      model: "llama-3.1-8b-instant",
-      messages: [{
-        role: "user",
-        content: `A classifier already decided this text is '${label}'. In ONE sentence, ` +
-                 `explain why that label fits. Do not change or question the label.\n\nTEXT: ${text}`,
-      }],
-    }),
-  });
-  const data = await r.json();
-  return data.choices?.[0]?.message?.content?.trim() || "";
+function percentile(values, probability) {
+  const sorted = [...values].sort((a, b) => a - b);
+  if (!sorted.length) return null;
+  const index = (sorted.length - 1) * probability;
+  const lower = Math.floor(index), upper = Math.ceil(index);
+  if (lower === upper) return sorted[lower];
+  return sorted[lower] + (sorted[upper] - sorted[lower]) * (index - lower);
 }
+
+function tokenCount(clf, text) {
+  try {
+    const encoded = clf.tokenizer(text, { truncation: false, padding: false });
+    const ids = encoded.input_ids;
+    if (Array.isArray(ids?.dims) && ids.dims.length) return ids.dims.at(-1);
+    if (ids?.data?.length) return ids.data.length;
+  } catch (_) {
+    // The exact text and whitespace-word count remain in the report if a future
+    // tokenizer API no longer exposes encoded dimensions.
+  }
+  return null;
+}
+
+function memorySnapshot() {
+  const memory = performance.memory;
+  return memory ? {
+    used_js_heap_bytes: memory.usedJSHeapSize,
+    total_js_heap_bytes: memory.totalJSHeapSize,
+    js_heap_limit_bytes: memory.jsHeapSizeLimit,
+  } : null;
+}
+
+async function sourceDocumentSha256() {
+  const response = await fetch(location.href, { cache: "no-store" });
+  const bytes = await response.arrayBuffer();
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+$("runbench").addEventListener("click", async () => {
+  const button = $("runbench");
+  button.disabled = true;
+  $("benchout").hidden = true;
+  try {
+    $("benchstatus").textContent = "Initializing pinned model…";
+    const clf = await getClassifier();
+    const cases = [8, 32, 128, 256].map((words) => ({
+      requested_whitespace_words: words,
+      text: Array(words).fill("kind").join(" "),
+    }));
+    const warmupsPerCase = 3;
+    const measuredRunsPerCase = 30;
+    const beforeMemory = memorySnapshot();
+    const measurements = [];
+    for (const testCase of cases) {
+      const actualTokens = tokenCount(clf, testCase.text);
+      $("benchstatus").textContent =
+        `Warming ${actualTokens ?? testCase.requested_whitespace_words}-token case…`;
+      for (let i = 0; i < warmupsPerCase; i++) {
+        await clf(testCase.text, { top_k: null });
+      }
+      const rawMs = [];
+      for (let i = 0; i < measuredRunsPerCase; i++) {
+        $("benchstatus").textContent =
+          `Measuring ${actualTokens ?? testCase.requested_whitespace_words} tokens: ` +
+          `${i + 1}/${measuredRunsPerCase}`;
+        const started = performance.now();
+        await clf(testCase.text, { top_k: null });
+        rawMs.push(performance.now() - started);
+      }
+      measurements.push({
+        requested_whitespace_words: testCase.requested_whitespace_words,
+        tokenizer_tokens_including_special_tokens: actualTokens,
+        utf8_bytes: new TextEncoder().encode(testCase.text).length,
+        warmups: warmupsPerCase,
+        successful_queries: rawMs.length,
+        failed_queries: 0,
+        raw_latency_ms: rawMs,
+        p50_ms: percentile(rawMs, 0.50),
+        p95_ms: percentile(rawMs, 0.95),
+      });
+    }
+    const afterMemory = memorySnapshot();
+    const resourceEntries = performance.getEntriesByType("resource")
+      .filter((entry) => /huggingface|xenova|onnx|wasm/i.test(entry.name))
+      .map((entry) => ({
+        name: entry.name,
+        duration_ms: entry.duration,
+        transfer_bytes: entry.transferSize,
+        decoded_body_bytes: entry.decodedBodySize,
+      }));
+    const report = {
+      schema_version: "1.0.0",
+      generated_at: new Date().toISOString(),
+      source_document_sha256: await sourceDocumentSha256(),
+      claim_scope: "JavaScript/WASM browser runtime only; not native ONNX or cloud serving",
+      cache_condition: "browser-managed caches were not cleared",
+      protocol: {
+        execution: "sequential queries in one page and one initialized pipeline",
+        timer: "performance.now around awaited pipeline inference",
+        percentile: "R-7 linear interpolation",
+        garbage_collection: "not forced",
+      },
+      model: { id: MODEL_ID, revision: MODEL_REVISION, dtype: "q8" },
+      runtime: {
+        library: "Transformers.js",
+        library_version: TRANSFORMERS_JS_VERSION,
+        backend: "wasm",
+        user_agent: navigator.userAgent,
+        platform: navigator.platform,
+        logical_cpu_count: navigator.hardwareConcurrency ?? null,
+        device_memory_gib: navigator.deviceMemory ?? null,
+      },
+      first_pipeline_initialization_ms: firstPipelineInitMs,
+      model_progress_bytes: Object.fromEntries(modelFileProgress),
+      memory_before: beforeMemory,
+      memory_after: afterMemory,
+      measurements,
+      matching_resource_timing: resourceEntries,
+    };
+    $("benchout").textContent = JSON.stringify(report, null, 2);
+    $("benchout").hidden = false;
+    $("benchstatus").textContent = "Done — raw timings and environment recorded below.";
+  } catch (e) {
+    $("benchstatus").textContent = "Error: " + e.message;
+  } finally {
+    button.disabled = false;
+  }
+});
 
 $("run").addEventListener("click", async () => {
   const text = $("text").value.trim();
@@ -211,14 +352,8 @@ $("run").addEventListener("click", async () => {
       $("fill-" + l).style.width = pct + "%";
       $("pct-" + l).textContent = pct + "%";
     }
-    let rationale = `Model classified this text as '${label}' with confidence ${m[label].toFixed(2)}.`;
-    const key = $("groqkey").value.trim();
-    if (key) {
-      $("rationale").textContent = "Writing rationale…";
-      try { rationale = (await llmRationale(text, label, key)) || rationale; }
-      catch { rationale += " (LLM rationale unavailable.)"; }
-    }
-    $("rationale").textContent = rationale;
+    $("rationale").textContent =
+      `Model classified this text as '${label}' with confidence ${m[label].toFixed(2)}.`;
   } catch (e) {
     $("status").textContent = "Error: " + e.message;
   } finally {

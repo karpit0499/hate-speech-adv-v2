@@ -10,12 +10,35 @@ spec:
     metadata:
       labels: { app: classifier-api }
     spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile: { type: RuntimeDefault }
       containers:
         - name: classifier-api
           image: hs-classifier:local
           imagePullPolicy: IfNotPresent      # use the imported local image
           ports:
             - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: { drop: ["ALL"] }
+          env:
+            - name: MODEL_PATH
+              value: kmrarpit2704/hs-roberta-v2
+            - name: MODEL_REVISION
+              value: bcaa0d20b4dd0d7af95ae732d9007893328206ae
+            - name: HF_HOME
+              value: /model-cache
+          volumeMounts:
+            - name: model-cache
+              mountPath: /model-cache
+            - name: tmp
+              mountPath: /tmp
           startupProbe:                       # gates everything until the model has loaded
             httpGet: { path: /healthz, port: 8080 }
             periodSeconds: 5
@@ -25,7 +48,12 @@ spec:
             periodSeconds: 5
           resources:
             requests: { memory: "1Gi", cpu: "500m" }
-            limits:   { memory: "2Gi" }
+            limits:   { memory: "2Gi", cpu: "2" }
+      volumes:
+        - name: model-cache
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
 ---
 apiVersion: v1
 kind: Service

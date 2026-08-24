@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "ambiguity_slices": {
+    "unanimous": {"predicate": "unanimous"},
+    "disputed": {"predicate": "non_unanimous"},
+    "one_vote_margin": {"predicate": "vote_margin_lte", "value": 1},
+    "low_consensus": {"predicate": "top_vote_fraction_lt", "value": 0.6666666666}
+  },
+  "hard_negative_slices": {
+    "offensive_not_hate": {"labels": [1], "predicate": "always"},
+    "non_hate_identity_mention": {"labels": [1, 2], "predicate": "identity_mention_v1"},
+    "non_hate_profanity": {"labels": [1, 2], "predicate": "profanity_v1"},
+    "short_non_hate": {"labels": [1, 2], "predicate": "token_count_lte", "value": 5},
+    "negated_or_counter_non_hate": {"labels": [1, 2], "predicate": "negation_or_counterspeech_v1"},
+    "quoted_or_reported_non_hate": {"labels": [1, 2], "predicate": "quoted_or_reported_v1"},
+    "obfuscated_non_hate": {"labels": [1, 2], "predicate": "obfuscation_v1"}
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "protocol_id": "grouped_v1",
+  "seeds": [13, 42, 73],
+  "selection": {
+    "primary_metric": "macro_f1",
+    "secondary_metric": "hate_speech_recall",
+    "minimum_hate_speech_precision": 0.35,
+    "evaluated_split": "validation",
+    "production_seed": 42,
+    "required_bootstrap_resamples": 2000
+  },
+  "defaults": {
+    "max_length": 256,
+    "train_batch_size": 16,
+    "eval_batch_size": 32,
+    "gradient_accumulation_steps": 1,
+    "epochs": 3,
+    "weight_decay": 0.01,
+    "warmup_ratio": 0.1,
+    "mixed_precision": "fp16",
+    "metric_for_best_model": "macro_f1"
+  },
+  "encoders": {
+    "current_roberta": {
+      "repository": "unitary/unbiased-toxic-roberta",
+      "revision": "36295dd80b422dc49f40052021430dae76241adc"
+    },
+    "twitter_roberta": {
+      "repository": "cardiffnlp/twitter-roberta-base",
+      "revision": "cbb417e9647b51504caf68cbe1af6bbf56da06b7"
+    }
+  },
+  "candidates": [
+    {"id": "current_lora_weighted_ce", "encoder": "current_roberta", "adaptation": "lora", "loss": "weighted_ce"},
+    {"id": "current_lora_focal", "encoder": "current_roberta", "adaptation": "lora", "loss": "focal"},
+    {"id": "current_lora_class_balanced", "encoder": "current_roberta", "adaptation": "lora", "loss": "class_balanced"},
+    {"id": "current_lora_soft_vote", "encoder": "current_roberta", "adaptation": "lora", "loss": "soft_vote"},
+    {"id": "current_partial_weighted_ce", "encoder": "current_roberta", "adaptation": "partial", "loss": "weighted_ce"},
+    {"id": "current_full_weighted_ce", "encoder": "current_roberta", "adaptation": "full", "loss": "weighted_ce"},
+    {"id": "twitter_lora_weighted_ce", "encoder": "twitter_roberta", "adaptation": "lora", "loss": "weighted_ce"},
+    {"id": "twitter_partial_weighted_ce", "encoder": "twitter_roberta", "adaptation": "partial", "loss": "weighted_ce"},
+    {"id": "twitter_full_weighted_ce", "encoder": "twitter_roberta", "adaptation": "full", "loss": "weighted_ce"}
+  ],
+  "adaptation": {
+    "lora": {"learning_rate": 0.0002, "rank": 16, "alpha": 32, "dropout": 0.05, "target_modules": ["query", "value"], "modules_to_save": ["classifier"]},
+    "partial": {"learning_rate": 0.00005, "unfrozen_encoder_layers": 4},
+    "full": {"learning_rate": 0.00002}
+  },
+  "loss": {
+    "weighted_ce": {},
+    "focal": {"gamma": 2.0},
+    "class_balanced": {"beta": 0.9999},
+    "soft_vote": {"minimum_probability": 0.000001}
+  }
+}

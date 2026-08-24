@@ -1,5 +1,5 @@
 {
-  "note": "Illustrative, curated evaluation sample for the live demo. NOT the authoritative test set - the numbers in the README/Phase 4 come from the held-out split of the Davidson dataset. This small set exists so a reviewer can watch the model be scored in the browser. No protected-attribute slurs; hate_speech items target protected attributes with dehumanization/exclusion (the class definition), and offensive items carry the everyday profanity that defines the Davidson 'offensive' class so they sit in-distribution.",
+  "note": "Illustrative, curated sample for the pinned historical browser artifact. It is not part of grouped_v1, is not an authoritative test set, and supports no model-selection or performance claim. The README reports current validation-only protocol evidence; the grouped frozen test remains sealed. This sample exists only so a reviewer can observe the browser scoring path.",
   "labels": ["hate_speech", "offensive", "neither"],
   "examples": [
     {"text": "People of that religion are subhuman and should be banned from the country.", "label": "hate_speech"},

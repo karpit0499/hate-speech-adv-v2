@@ -1,5 +1,4 @@
 import os, torch
-import requests
 from fastapi import FastAPI, BackgroundTasks
 from pydantic import BaseModel, Field
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -8,6 +7,10 @@ from google.cloud import bigquery
 import logging, uuid, datetime
 
 MODEL_PATH = os.environ.get("MODEL_PATH")
+MODEL_REVISION = os.environ.get(
+    "MODEL_REVISION",
+    "bcaa0d20b4dd0d7af95ae732d9007893328206ae",
+)
 if not MODEL_PATH:
     raise RuntimeError(
         "MODEL_PATH is not set. Point it at your Hugging Face repo id "
@@ -20,8 +23,11 @@ ID2LABEL = {0: "hate_speech", 1: "offensive", 2: "neither"}
 app = FastAPI(title="hate-speech-adv v2 classifier")
 
 # Load once at startup (not per request)
-tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH, revision=MODEL_REVISION)
+model = AutoModelForSequenceClassification.from_pretrained(
+    MODEL_PATH,
+    revision=MODEL_REVISION,
+)
 model.eval()
 device = "cuda" if torch.cuda.is_available() else "cpu"
 model.to(device)
@@ -37,35 +43,21 @@ class ClassifyOut(BaseModel):
 
 @app.get("/healthz")
 def healthz():
-    return {"status": "ok"}
-
-LITELLM_URL = os.environ.get("LITELLM_URL")   # e.g. http://litellm:4000
+    return {
+        "status": "ok",
+        "model": MODEL_PATH,
+        "model_revision": MODEL_REVISION,
+    }
 
 def get_rationale(text: str, label: str) -> str:
-    if not LITELLM_URL:
-        return f"Model classified this text as '{label}'."
-    try:
-        r = requests.post(
-            f"{LITELLM_URL}/v1/chat/completions",
-            json={
-                "model": "rationale-model",
-                "messages": [{
-                    "role": "user",
-                    "content": (
-                        f"A classifier already decided this text is '{label}'. "
-                        f"In ONE sentence, explain why that label fits. "
-                        f"Do not change or question the label.\n\nTEXT: {text}"
-                    ),
-                }],
-            },
-            timeout=5,
-        )
-        return r.json()["choices"][0]["message"]["content"].strip()
-    except Exception:
-        return f"Model classified this text as '{label}'."
+    # Keep the moderation text inside this service. Earlier versions supported
+    # forwarding it to an optional rationale model; that made privacy depend on
+    # an easy-to-miss environment variable and added no classification evidence.
+    return f"Model classified this text as '{label}'."
 
 log = logging.getLogger("uvicorn.error")
 BQ_TABLE = os.environ.get("BQ_TABLE")   # e.g. "hate-speech-adv.moderation.classifications_raw"
+STORE_RAW_TEXT = os.environ.get("STORE_RAW_TEXT", "false").lower() == "true"
 bq = bigquery.Client() if BQ_TABLE else None
 
 def write_row(text, out):
@@ -73,13 +65,16 @@ def write_row(text, out):
         return
     errors = bq.insert_rows_json(BQ_TABLE, [{
         "message_id": str(uuid.uuid4()),
-        "input_text": text,
+        # Raw moderation text can be personal or harmful. Keep it out of analytics
+        # unless an operator has explicitly enabled storage and documented consent,
+        # retention, and deletion handling for the deployment.
+        "input_text": text if STORE_RAW_TEXT else "[redacted]",
         "label": out.label,
         "confidence": out.confidence,
         "target_groups": ",".join(out.target_groups),
         "rationale": out.rationale,
         "embedding": None,
-        "model_version": "hs-roberta-v2",
+        "model_version": f"{MODEL_PATH}@{MODEL_REVISION}",
         "created_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
     }])
     if errors:                       # insert_rows_json RETURNS errors, it does not raise
