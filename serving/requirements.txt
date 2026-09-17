@@ -1,6 +1,6 @@
 transformers==5.15.1
 fastapi==0.141.1
 uvicorn==0.52.4
-huggingface_hub==1.28.0
+huggingface_hub==1.31.0
 # Uncomment when you add the Phase 9 BigQuery writer:
 google-cloud-bigquery==3.43.0
