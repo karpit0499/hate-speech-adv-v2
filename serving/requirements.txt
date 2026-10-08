@@ -1,5 +1,5 @@
 transformers==5.15.1
-fastapi==0.141.1
+fastapi==0.142.2
 uvicorn==0.52.4
 huggingface_hub==1.28.0
 # Uncomment when you add the Phase 9 BigQuery writer:
